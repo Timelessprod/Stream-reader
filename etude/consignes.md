@@ -68,24 +68,24 @@ Cependant, il ne faut surtout pas utiliser de Data Lake, étant donné que les d
 
 > Batch ou Stream?
 
-Etant donné la quantité de donnée relativement faible à traiter (3600 * 200Go / 24 ~ 2Mo par seconde) et la quasi absence de traitement à effectuer, un stream est préferable pour maximiser la vitesse de traitement des alertes.
+Étant donné la quantité de donnée relativement faible à traiter (3600 * 200Go / 24 ~ 2Mo par seconde) et la quasi absence de traitement à effectuer, un stream est préférable pour maximiser la vitesse de traitement des alertes.
 Une solution alternative consisterait à utiliser un stream pour filtrer les alertes et les traiter avec un système spécifique tandis que les rapports pourraient passer par un Map-Reduce pour traiter les données afin de favoriser leur stockage
 
+Étapes que suivraient les données :
 (
-* encryption éventuelle,
+* chiffrement éventuel,
 * compression,
-* extraction de données,
-* création de nouvelles caractéristiques à partir des données existente...
-
+* (déchiffrage et) extraction de données,
+* création de nouvelles caractéristiques à partir des données existantes...
 )
 
-**Réponse Finale** : Ce problème a des contraintes qui nécessitent l'appel aux technologies du Big Data:
+Ainsi, ce problème a des contraintes qui nécessitent l'appel aux technologies du Big Data:
 * Une quantité considérable de données à traiter
 * Un traitement rapide de ces données
 * Une disponibilité et une résistance aux pannes maximales
 
 Pour réponde à ces problématiques, nous devrions faire appel aux composants suivants:
-* *Source de données* : Drones (Eventuellement un protocole et un réseau d'antennes privées pour une vitesse de transport optimale)
+* *Source de données* : Drones (Éventuellement un protocole et un réseau d'antennes privées ou via la 5G pour une vitesse de transport optimale)
 * *Stockage* : Base de données BASE modèle clé-valeur orientée par ligne
 * *Stream Processing* : Pour filtrer les alertes à traiter le plus rapidement possible et les rapports standards.
 * *Batch Processing* : Pour le traitement des rapports et l'optimisation de leur stockage.
