@@ -70,3 +70,7 @@ La tentative ratée aurait été causée par la quantité de données qui ont su
 Ce scaling pouvait être causé par :
 * certains jours où beaucoup de monde sortait, donc plus de données à traiter comparé à d'habitude (exemple : jour de marché)
 * une augmentation de la population, causée par une augmentation de la natalité grâce à la paix constante dans le pays
+  
+## Question 4
+
+> Quelles informations, oubliées dans le rapport du drone, pourraient augmenter l'efficacité des observateurs de Peaceland ?
