@@ -74,3 +74,9 @@ Ce scaling pouvait être causé par :
 ## Question 4
 
 > Quelles informations, oubliées dans le rapport du drone, pourraient augmenter l'efficacité des observateurs de Peaceland ?
+
+Le rapport contient déjà :
+* L'ID du Peacewatcher
+* Sa position (longitude, latitude)
+* Le nom des personnes observées ainsi que leur Peacescore actuel
+* La liste de mots entendus
