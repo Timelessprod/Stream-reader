@@ -4,5 +4,8 @@
 
 👉 [Étude du projet](etude/consignes.md)
 
-## Crédits
-* Corentin DUCHÊNE <corentin.duchene@epita.fr> - Nigiva
+Groupe composé de:
+- Erwan Goudard
+- Adrien Merat
+- Corentin Duchêne
+- Henri Jamet
