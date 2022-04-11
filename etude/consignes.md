@@ -66,6 +66,18 @@ Quant au stockage des tables, on pourrait utiliser le format de tables Delta *i.
 
 Cependant, il ne faut surtout pas utiliser de Data Lake, étant donné que les données sont structurées et ne sont pas assez grosses et variées pour justifier d'une telle technologie. Un Data Lake est davantage orienté pour les données non structurées ou partiellement structurées.
 
+> Batch ou Stream?
+
+Etant donné la quantité de donnée relativement faible à traiter ($\dfrac{200Go}{24 \times 3600} \simeq 2Mo$ par seconde) et la quasi absence de traitement à effectuer, un stream est préferable pour maximiser la vitesse de traitement des alertes.
+Une solution alternative consisterait à utiliser un stream pour filtrer les alertes et les traiter avec un système spécifique tandis que les rapports pourraient passer par un Map-Reduce pour traiter les données afin de favoriser leur stockage
+(
+* encryption éventuelle,
+* compression,
+* extraction de données,
+* création de nouvelles caractéristiques à partir des données existente...
+
+)
+
 ## Question 3
 
 > Quelle(s) erreur(s) de Peaceland peut expliquer la tentative ratée ?
