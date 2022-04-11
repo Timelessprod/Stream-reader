@@ -2,9 +2,7 @@
 
 # Synthèse des consignes
 
-
-https://docs.google.com/document/d/1HhRYSRrJ0bu8Qb4HncIYzhKcCU-pHknSEd40RgFnJis/edit
-
+👉 [Le sujet du projet](https://docs.google.com/document/d/1HhRYSRrJ0bu8Qb4HncIYzhKcCU-pHknSEd40RgFnJis/edit)
 
 ## Objectif de l'architecture Big Data
 * Stocker les données de chaque PeaceWatcher
