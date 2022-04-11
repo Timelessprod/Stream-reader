@@ -58,6 +58,26 @@ Analysons chaque composante CAP d'après la situation décrite dans le sujet :
 
 On déduit de l'analyse qu'il faudrait s'orienter vers une architecture *CP* ou *AP* afin de respecter les demandes. Nous allons cependant préférer l'architecture *AP*  car il ne nous est pas demandé de gérer la communication des drones entre eux, ce qui nous permet de négliger la consistance.
 
+> Vers quel type de base de données faut il s'orienter?
+
+Etant donné les données contenues dans les rapport, l'idéal pour facilement conserver la trace des rapports sans perte serait sans doute des bases de données *clé-valeur* orientées *par ligne*
+
+
+**Ne surtout pas utiliser de Data Lake étant donné la taille minuscule des données et leur logique par catégorie!**
+
+
+> Batch ou Stream?
+
+Etant donné la quantité de donnée relativement faible à traiter ($\dfrac{200Go}{24 \times 3600} \simeq 2Mo$ par seconde) et la quasi absence de traitement à effectuer, un stream est préferable pour maximiser la vitesse de traitement des alertes.
+Une solution alternative consisterait à utiliser un stream pour filtrer les alertes et les traiter avec un système spécifique tandis que les rapports pourraient passer par un Map-Reduce pour traiter les données afin de favoriser leur stockage
+(
+* encryption éventuelle,
+* compression,
+* extraction de données,
+* création de nouvelles caractéristiques à partir des données existente...
+
+)
+
 ## Question 3
 
 > Quelle(s) erreur(s) de Peaceland peut expliquer la tentative ratée ?
