@@ -1,6 +1,8 @@
-# SPARK
+# Projet SPARK - PeacelandEn
 
-Projet de SCALA SPARK en SCIA 2023 à EPITA.
+👉 [Le sujet du projet](https://docs.google.com/document/d/1HhRYSRrJ0bu8Qb4HncIYzhKcCU-pHknSEd40RgFnJis/edit)
+
+👉 [Étude du projet](etude/consignes.md)
 
 Groupe composé de:
 - Erwan Goudard

@@ -2,9 +2,7 @@
 
 # Synthèse des consignes
 
-
-https://docs.google.com/document/d/1HhRYSRrJ0bu8Qb4HncIYzhKcCU-pHknSEd40RgFnJis/edit
-
+👉 [Le sujet du projet](https://docs.google.com/document/d/1HhRYSRrJ0bu8Qb4HncIYzhKcCU-pHknSEd40RgFnJis/edit)
 
 ## Objectif de l'architecture Big Data
 * Stocker les données de chaque PeaceWatcher
@@ -102,3 +100,16 @@ La tentative ratée aurait été causée par la quantité de données qui ont su
 Ce scaling pouvait être causé par :
 * certains jours où beaucoup de monde sortait, donc plus de données à traiter comparé à d'habitude (exemple : jour de marché)
 * une augmentation de la population, causée par une augmentation de la natalité grâce à la paix constante dans le pays
+  
+## Question 4
+
+> Quelles informations, oubliées dans le rapport du drone, pourraient augmenter l'efficacité des observateurs de Peaceland ?
+
+Le rapport contient déjà :
+* L'ID du Peacewatcher
+* Sa position (longitude, latitude)
+* Le nom des personnes observées ainsi que leur Peacescore actuel
+* La liste de mots entendus
+  
+Pour augmenter l'efficacité des observateurs, on pourrait permettre aux PeaceMakers d'**anticiper les lieux d'intervention** et s'en rapprochant **en ajoutant la moyenne de Peacescore** ainsi que son évolution (i.e. sa dérivée). Cela permetrait d'anticiper les mouvements de foule ou autres paniques générales.
+Car le Peacescore d'un individu est souvent influencé par celui de ceux autour de lui, connaitre la moyenne d'une zone permet d'agir en conséquence.
