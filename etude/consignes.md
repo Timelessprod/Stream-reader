@@ -35,7 +35,19 @@ De quel(s) type(s) de composant(s) (listés dans le cours) l'architecture aura-t
 3. Quelle(s) erreur(s) de Peaceland peut expliquer la tentative ratée ?
 4. Peaceland a probablement oublié certaines informations techniques dans le rapport envoyé par le drone. À l'avenir, cette information pourrait aider Peaceland à rendre ses observateurs de la paix beaucoup plus efficaces. Quelles informations ?
 
+## Question 1
 
+> Avons nous vraiment besoin du Big Data pour ce problème?
+
+Etant donné les remarques ci-dessous :
+* La grande quantité de données à stocker (en un an, environ 365 * 200Gb = 73Tb de données stockées)
+* Un accès rapide à ces données (tout particulièrement pour les alertes)
+* Différents types de données
+    * Chaine de caractère : Nom
+    * Float : Longitude, latitude, PeaceScore
+    * Liste de chaine de caractère : Mots entendus
+
+on en déduit qu'une architecture de type Big Data est nécessaire à ce projet.
 
 ## Question 3
 
