@@ -49,6 +49,15 @@ Etant donné les remarques ci-dessous :
 
 on en déduit qu'une architecture de type Big Data est nécessaire à ce projet.
 
+> Quels priorités choisir parmi les trois du thèorème CAP?
+
+Analysons chaque composante CAP d'après la situation décrite dans le sujet :
+* **Consistance (C)** : Elle n'est utile uniquement que dans l'éventualité où les drones seraient amener à coordonner leurs mouvements entre eux.
+* **Disponibilité (A)** : Elle est importante dans tous les cas. En effet, si le système ne réagissait plus suffisament rapidement, les rapports des drones auraient tendance à s'accumuler avant d'être traité. On peut cependant supposer que certaines périodes (la nuit notamment) sont propices à une diminution du nombre de requêtes, et que le faible nombre de données générées par chaque drone indépendament peut être stocké dans l'appareil en attendant d'être traité.
+* **Résistance au pannes (P)** : Elle est indispensable au projet, car le système d'alerte doit toujours être opérationnel dans une certaine mesure.
+
+On déduit de l'analyse qu'il faudrait s'orienter vers une architecture *CP* ou *AP* afin de respecter les demandes. Nous allons cependant préférer l'architecture *AP*  car il ne nous est pas demandé de gérer la communication des drones entre eux, ce qui nous permet de négliger la consistance.
+
 ## Question 3
 
 > Quelle(s) erreur(s) de Peaceland peut expliquer la tentative ratée ?
