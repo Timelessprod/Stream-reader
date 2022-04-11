@@ -84,6 +84,12 @@ Une solution alternative consisterait à utiliser un stream pour filtrer les ale
 * Un traitement rapide de ces données
 * Une disponibilité et une résistance aux pannes maximales
 
+Pour réponde à ces problématiques, nous devrions faire appel aux composants suivants:
+* *Source de données* : Drones (Eventuellement un protocole et un réseau d'antennes privées pour une vitesse de transport optimale)
+* *Stockage* : Base de données BASE modèle clé-valeur orientée par ligne
+* *Stream Processing* : Pour filtrer les alertes à traiter le plus rapidement possible et les rapports standards.
+* *Batch Processing* : Pour le traitement des rapports et l'optimisation de leur stockage.
+
 ## Question 3
 
 > Quelle(s) erreur(s) de Peaceland peut expliquer la tentative ratée ?
