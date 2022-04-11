@@ -81,4 +81,5 @@ Le rapport contient déjà :
 * Le nom des personnes observées ainsi que leur Peacescore actuel
 * La liste de mots entendus
   
-Pour augmenter l'efficacité des observateurs, on pourrait permettre aux PeaceMakers d'anticiper les lieux d'intervention et s'en rapprochant en ajoutant la moyenne de Peacescore ainsi que son évolution (càd sa dérivée). Cela permetrait d'anticiper les mouvements de foule ou autres paniques générales.
+Pour augmenter l'efficacité des observateurs, on pourrait permettre aux PeaceMakers d'**anticiper les lieux d'intervention** et s'en rapprochant **en ajoutant la moyenne de Peacescore** ainsi que son évolution (càd sa dérivée). Cela permetrait d'anticiper les mouvements de foule ou autres paniques générales.
+Car le Peacescore d'un individu est souvent influencé par celui de ceux autour de lui, connaitre la moyenne d'une zone permet d'agir en conséquence.
