@@ -80,3 +80,5 @@ Le rapport contient déjà :
 * Sa position (longitude, latitude)
 * Le nom des personnes observées ainsi que leur Peacescore actuel
 * La liste de mots entendus
+  
+Pour augmenter l'efficacité des observateurs, on pourrait permettre aux PeaceMakers d'anticiper les lieux d'intervention et s'en rapprochant en ajoutant la moyenne de Peacescore ainsi que son évolution (càd sa dérivée). Cela permetrait d'anticiper les mouvements de foule ou autres paniques générales.
