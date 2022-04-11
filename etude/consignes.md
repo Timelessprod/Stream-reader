@@ -79,6 +79,11 @@ Une solution alternative consisterait à utiliser un stream pour filtrer les ale
 
 )
 
+**Réponse Finale** : Ce problème a des contraintes qui nécessitent l'appel aux technologies du Big Data:
+* Une quantité considérable de données à traiter
+* Un traitement rapide de ces données
+* Une disponibilité et une résistance aux pannes maximales
+
 ## Question 3
 
 > Quelle(s) erreur(s) de Peaceland peut expliquer la tentative ratée ?
