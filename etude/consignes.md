@@ -2,9 +2,9 @@
 
 # Synthèse des consignes
 
-:::info
+
 https://docs.google.com/document/d/1HhRYSRrJ0bu8Qb4HncIYzhKcCU-pHknSEd40RgFnJis/edit
-:::
+
 
 ## Objectif de l'architecture Big Data
 * Stocker les données de chaque PeaceWatcher
@@ -25,8 +25,8 @@ https://docs.google.com/document/d/1HhRYSRrJ0bu8Qb4HncIYzhKcCU-pHknSEd40RgFnJis/
 
 ## Statistiques
 * Toutes les données doivent être conservées
-* $\simeq$ 200Gb de données générées par jour
-* $< 1\%$ d'alertes parmi les rapports
+* ~200Gb de données générées par jour
+* < 1% d'alertes parmi les rapports
 
 ## Questions
 1. Quelles sont les contraintes techniques/business auxquelles le composant de stockage de données de l'architecture du programme doit répondre pour satisfaire le besoin décrit par le client dans le paragraphe "Statistiques" ? 
