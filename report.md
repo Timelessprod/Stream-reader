@@ -149,3 +149,7 @@ Pour augmenter l'efficacité des observateurs, on pourrait :
 1. Permettre aux PeaceMakers d'anticiper les lieux d'intervention. Il suffirait alors de se rapprocher de ces lieux puisque la moyenne de Peacescore ainsi que son évolution (c'est-à-dire sa dérivée) seraient ajoutées au rapport. De ce fait, il serait possible d'anticiper les mouvements de foule ou autres paniques générales. En effet, le Peacescore d'un individu est souvent influencé par le score de ses voisins, connaitre la moyenne d'une zone permettrait d'agir en conséquence.
 
 2. Détecter les émotions exprimées par les individus. En utilisant un système embarqué de reconnaissance d'expressions du visage et d'émotions dans la voix, on pourrait permettre aux PeaceWatcher d'avoir une information essentielle à la détection de la haine. Tout ne s'exprime pas que par des mots. Par conséquent, permettre aux drones de pouvoir lire sur les visages et écouter l'intonation de la voix faciliteraient grandement le travail de maintien de la paix : un individu avec un visage triste ou une voix traduisant une colère profonde et une frustration à peine cachée se verrait invité dans un camp de la paix.
+
+# Architecture
+
+![](ressources/architecture.png)
