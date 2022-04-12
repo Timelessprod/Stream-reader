@@ -58,14 +58,12 @@ On déduit de l'analyse qu'il faudrait s'orienter vers une architecture *CP* ou 
 
 > Vers quel type de base de données faut-il s'orienter?
 
-Étant donné les données contenues dans les rapports, l'idéal pour facilement conserver la trace des rapports sans perte, serait sans doute des bases de données de type *clé-valeur* orientées *par ligne*, on pourrait donc s'orienter vers du SQL ou une technologie similaire.
-
-Quant au stockage des tables, on pourrait utiliser le format de tables Delta *i.e.*, des fichiers parquets. Le format Delta est adapté aux tables lourdes et permet une meilleure distribution des données pour une éventuelle analyse de celles-ci sur un cluster. Le format parquet (intégré au format Delta) ajoute une optimisation sur la lecture des données en stockant celle-ci colonne après colonne sur le disque dur, au lieu de mettre les lignes les unes après les autres. Ainsi les filtres de recherches sont plus rapides, car les données d'une même colonne semblent adjacentes. Avec la technologie de tables SQL Delta, on peut utiliser le schéma suivant :
+Étant donné les données contenues dans les rapports, on pourrait penser que pour facilement conserver la trace des rapports sans perte, il serait sans doute pratique d'utiliser des bases de données de type *clé-valeur* orientées *par ligne*, on pourrait donc s'orienter vers du SQL ou une technologie similaire. Cependant, on souhaite permettre aux PeaceMakers d’analyser les données des PeaceWatchers. En d'autres termes, on veut faire un travail ponctuel de récolte de toutes les données d'une journée par exemple et de faire une analyse de cela : moyenne, écart-type, ... etc. Pour ce faire, il faudrait plutôt utiliser une base de données No-SQL orientée colonne. L'avantage, est qu'il est plus rapide d'accéder à toutes les valeurs d'une colonne pour faire un traitement. C'est fait spécialement pour de l'analyse de donnée. Mais c'est pas fait du tout pour de la recherche de données spécifique (qui est plus adapté pour une BDD orientée lignes).
 
 **Reports :**
-| Id  | PeaceWatcherId | Longitude | Latitude | Time     | HeardWords    | PeaceScores              |
-| --- | -------------- | --------- | -------- | -------- | ------------- | ------------------------ |
-| KEY | KEY            | DOUBLE    | DOUBLE   | DATETIME | ARRAY<STRING> | MAP<Citizen.Id, TINYINT> |
+| ReportId  | PeaceWatcherId | Longitude | Latitude | Time     | HeardWords    | PeaceScores             |
+| --------- | -------------- | --------- | -------- | -------- | ------------- | ----------------------- |
+| INT       | INT            | DOUBLE    | DOUBLE   | DATETIME | ARRAY<STRING> | MAP<CitizenId, TINYINT> |
 
 ⚠️ Cependant, il ne faut surtout pas utiliser de Data Lake, étant donné que les données sont structurées et ne sont pas assez grosses et variées pour justifier d'une telle technologie. Un Data Lake est davantage orientée pour les données non structurées ou partiellement structurées.
 
