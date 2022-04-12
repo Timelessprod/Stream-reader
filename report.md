@@ -128,13 +128,13 @@ Le cahier des charges de Peaceland est très compréhensible, mais manque de pr�
 
     Nous supposerons que notre architecture dispose des marges requises. (Surcharge éventuelle de requête en journée ou dans certains lieux, absence de requête pendant la nuit...)
 
-4. La confidentialité des utilisateurs et le caractère privé des informations enregistré ne nous permet pas de savoir si l'usage de composants du cloud est envisageable ou si toute l'architecture doit être recréée à la main.
+4. La confidentialité des utilisateurs et le caractère privé des informations enregistrées ne nous permet pas de savoir si l'usage de composants du cloud est envisageable ou si toute l'architecture doit être recréée à la main.
 
     Dans le doute, nous ne ferons pas appel à des composants échappant au contrôle de PeaceLand.
 
 5. Le cahier des charges ne le précise pas, mais on peut supposer qu'il est important de prévoir une interface permettant de facilement vérifier l'état des différents composants du système pour pouvoir réagir en cas de panne.
 
-La tentative ratée aurait été causée par la quantité de données qui ont surchargées le programme fait par l'équipe précédente. Ils n'auraient pas construit le programme pour être capable de traiter le scaling que pouvait subir leur programme. 
+La tentative ratée aurait été causée par la quantité de données qui ont surchargé le programme fait par l'équipe précédente. Ils n'auraient pas construit le programme pour être capables de traiter le scaling que pouvait subir leur programme. 
 Ce scaling pouvait être causé par :
 * certains jours où beaucoup de monde sortait, donc plus de données à traiter comparé à d'habitude (exemple : jour de marché)
 * une augmentation de la population, causée par une augmentation de la natalité grâce à la paix constante dans le pays
