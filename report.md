@@ -124,7 +124,7 @@ Le cahier des charges de Peaceland est très compréhensible, mais manque de pr�
     
     On va admettre que les alertes peuvent être déclenchées à n'importe quel moment et ne sont pas nécessairement attachées à un rapport.
 
-3. Nous n'avons pas d'information quant au nombre de citoyens et de drones et leurs habitudes. Il nous est ainsi difficile d'estimer les variations du nombre de requêtes au cours de la journée et les marges que nous devrions anticiper.
+3. Nous n'avons pas d'information quant au nombre de citoyens et de drones et à leurs habitudes. Il nous est ainsi difficile d'estimer les variations du nombre de requêtes au cours de la journée et les marges que nous devrions anticiper.
 
     Nous supposerons que notre architecture dispose des marges requises. (Surcharge éventuelle de requête en journée ou dans certains lieux, absence de requête pendant la nuit...)
 
