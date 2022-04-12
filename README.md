@@ -4,8 +4,10 @@
 
 👉 [Étude du projet](etude/consignes.md)
 
-Groupe composé de:
-- Erwan Goudard
-- Adrien Merat
-- Corentin Duchêne
-- Henri Jamet
+Composition du groupe :
+| Nom | @epita.fr | Github |
+| - | - | - |
+| Erwan Goudard | `erwan.goudard` | `Goudard` |
+| Adrien Merat | `adrien.merat` | `Timelessprod` |
+| Corentin Duchêne| `corentin.duchene` | `Nigiva` |
+| Henri Jamet | `henri.jamet` | `hjamet` |
