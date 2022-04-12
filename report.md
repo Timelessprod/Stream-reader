@@ -58,7 +58,17 @@ On déduit de l'analyse qu'il faudrait s'orienter vers une architecture *CP* ou 
 
 > Vers quel type de base de données faut-il s'orienter?
 
-Étant donné les données contenues dans les rapports, on pourrait penser que pour facilement conserver la trace des rapports sans perte, il serait sans doute pratique d'utiliser des bases de données de type *clé-valeur* orientées *par ligne*, on pourrait donc s'orienter vers du SQL ou une technologie similaire. Cependant, on souhaite permettre aux PeaceMakers d’analyser les données des PeaceWatchers. En d'autres termes, on veut faire un travail ponctuel de récolte de toutes les données d'une journée par exemple et de faire une analyse de cela : moyenne, écart-type, ... etc. Pour ce faire, il faudrait plutôt utiliser une base de données No-SQL orientée colonne. L'avantage, est qu'il est plus rapide d'accéder à toutes les valeurs d'une colonne pour faire un traitement. C'est fait spécialement pour de l'analyse de donnée. Mais c'est pas fait du tout pour de la recherche de données spécifique (qui est plus adapté pour une BDD orientée lignes).
+Tout dépend du besoin des Data-scientistes. 
+
+Si on voulait :
+* avoir un accès rapide à tout moment à certains rapports spécifique 
+* aider notre équipe de scientifiques à se sentir à l'aise (habitué à traiter avec des bases de données SQL)
+
+Alors une base de données clé-valeur orientée ligne de type SQL est parfaite. Mais ce type de base de données est difficilement scalable horizontalement et ce n'est pas très optimisé si l'on veut faire de l'analyse de données en fin de compte.
+
+L'analyse de données effectuée par les PeaceMaker consiste essentiellement à récupérer l'ensemble des valeurs d'une colonne pour en faire des statistiques (moyenne, écart-type, ...). Cette analyse est faite ponctuellement, on peut imaginer ça chaque soir. On n'a donc pas forcément besoin d'un accès rapide immédiat à la donnée. On remarque ainsi que l'approche clé-valeur pour une base de données orientée ligne n'est pas forcément adaptée à notre cas d'usage.
+
+Pour ce faire, il faudrait plutôt utiliser une base de données No-SQL orientée colonne. Ce type de base de données est parfaitement adapté pour faire de l'analyse de données issues de capteurs d'objet connectés (typiquement ce qui est fait avec les drones). L'entité est scalable sur plusieurs machines. Finalement, en utilisant ce type de base de données, on se repose sur les propriétés de type BASE, avec une donnée qui est forcément Disponible (A) et Distribuée (P). C'est exactement ce que l'on veut !
 
 **Reports :**
 | ReportId  | PeaceWatcherId | Longitude | Latitude | Time     | HeardWords    | PeaceScores             |
@@ -107,7 +117,7 @@ Le traitement des alertes nécessite les contraintes métier suivantes :
 Pour répondre à ces exigences, nous pourrions faire usage des composants suivants
 
 * Pour communiquer rapidement les alertes, nous devrions faire appel à un **stream** pour les traiter dans l'ordre de leur arrivée.
-* Pour transmettre les alertes au Peacemakers, une interface Web devrait être mise en place. Nous pourrions faire appel à un serveur Apache pour ce faire.
+* Pour transmettre les alertes au PeaceMakers, une interface Web devrait être mise en place. Nous pourrions faire appel à un serveur Apache pour ce faire.
 
 ## Question 3
 
@@ -137,14 +147,14 @@ Le cahier des charges de Peaceland est très compréhensible, mais manque de pr�
 > Quelles informations, oubliées dans le rapport du drone, pourraient augmenter l'efficacité des observateurs de Peaceland ?
 
 Le rapport contient déjà :
-* L'ID du Peacewatcher
+* L'ID du PeaceWatcher
 * Sa position (longitude, latitude)
-* Le nom des personnes observées ainsi que leur Peacescore actuel
+* Le nom des personnes observées ainsi que leur PeaceScore actuel
 * La liste de mots entendus
 
 Pour augmenter l'efficacité des observateurs, on pourrait :
 
-1. Permettre aux PeaceMakers d'anticiper les lieux d'intervention. Il suffirait alors de se rapprocher de ces lieux puisque la moyenne de Peacescore ainsi que son évolution (c'est-à-dire sa dérivée) seraient ajoutées au rapport. De ce fait, il serait possible d'anticiper les mouvements de foule ou autres paniques générales. En effet, le Peacescore d'un individu est souvent influencé par le score de ses voisins, connaitre la moyenne d'une zone permettrait d'agir en conséquence.
+1. Permettre aux PeaceMakers d'anticiper les lieux d'intervention. Il suffirait alors de se rapprocher de ces lieux puisque la moyenne de PeaceScore ainsi que son évolution (c'est-à-dire sa dérivée) seraient ajoutées au rapport. De ce fait, il serait possible d'anticiper les mouvements de foule ou autres paniques générales. En effet, le PeaceScore d'un individu est souvent influencé par le score de ses voisins, connaitre la moyenne d'une zone permettrait d'agir en conséquence.
 
 2. Détecter les émotions exprimées par les individus. En utilisant un système embarqué de reconnaissance d'expressions du visage et d'émotions dans la voix, on pourrait permettre aux PeaceWatcher d'avoir une information essentielle à la détection de la haine. Tout ne s'exprime pas que par des mots. Par conséquent, permettre aux drones de pouvoir lire sur les visages et écouter l'intonation de la voix faciliteraient grandement le travail de maintien de la paix : un individu avec un visage triste ou une voix traduisant une colère profonde et une frustration à peine cachée se verrait invité dans un camp de la paix.
 
