@@ -76,9 +76,9 @@ Une solution alternative consisterait à utiliser un stream pour filtrer les ale
 
 Étapes que suivraient les données :
 * chiffrement éventuel,
-* compression,
-* (déchiffrage et) extraction de données,
-* création de nouvelles caractéristiques à partir des données existantes...
+* compression
+* (déchiffrage et extraction de données,
+* création de nouvelles caractéristiques à partir des données existantes...)
 
 Ainsi, ce problème a des contraintes qui nécessitent l'appel aux technologies du Big Data :
 * Une quantité considérable de données à traiter
@@ -86,9 +86,9 @@ Ainsi, ce problème a des contraintes qui nécessitent l'appel aux technologies 
 * Une disponibilité et une résistance aux pannes maximales
 
 Pour répondre à ces problématiques, nous devrions faire appel aux composants suivants :
-* *Source de données* : Drones (Éventuellement un protocole et un réseau d'antennes privées ou via la 5G pour une vitesse de transport optimale)
+* *Source de données* : Drones (éventuellement un protocole et un réseau d'antennes privées ou via la 5G pour une vitesse optimale)
 * *Stockage* : Base de données BASE modèle clé-valeur orientée par ligne
-* *Stream Processing* : Pour filtrer les alertes à traiter le plus rapidement possible et les rapports standards.
+* *Stream Processing* : pour filtrer les alertes à traiter le plus rapidement possible et les rapports standards.
 * *Batch Processing* : Pour le traitement des rapports et l'optimisation de leur stockage.
 
 ## Question 2
@@ -102,9 +102,9 @@ Le traitement des alertes nécessite les contraintes métier suivantes :
     * La gestion des alertes devrait être répartie de manière optimale entre les différents PeaceMaker.
     * Les PeaceMakers pourraient se voir attribuer des alertes différentes en fonction de leurs compétences.
 * **Nombre**
-    * La gestion des alertes devrait prendre en compte le nombre de PeaceMaker total et diponible.
+    * La gestion des alertes devrait prendre en compte le nombre de PeaceMaker total et disponible.
 * **Ajustement des coûts**
-    * Les alertes devrait être répartis entre les différents PeaceMakers en fonction des éventuels couts d'intervention.
+    * Les alertes devraient être réparties entre les différents PeaceMakers en fonction des éventuels coûts d'intervention.
 
 Pour répondre à ces exigences, nous pourrions faire usage des composants suivants
 
