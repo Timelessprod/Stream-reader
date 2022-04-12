@@ -118,6 +118,13 @@ Pour répondre à ces exigences, nous pourrions faire usage des composants suiva
 Le cahier des charges de Peaceland est très compréhensible mais manque de précision sur certains points qui peuvent expliquer l'échec de l'équipe de Data-Scientist:
 * Le budget disponible n'est pas clairement précisé
     * On pourrait tenter d'atteindre les nécessités du cahier des charge en minimisant au maximum le coût de mise en place et d'entretien mais certaines nécessités sont assez floues. *Exemple* : "Les alertes doivent être déclenchées le **plus vite possible**". On aurait préféré *"Une alerte doit pouvoir être traitée en 1 seconde."*
+* Il ne nous est pas détaillé si les alertes sont générées en même temps que les rapports ou constituent un service à part entière.
+    * On va admettre que les alertes peuvent être déclenchées à n'importe quel moment et ne sont pas nécessairement attachées à un rapport.
+* Nous n'avons pas d'information quant au nombre de citoyens et de drones et leurs habitudes. Il nous est ainsi difficile d'estimer les variations du nombre de requêtes au cours de la journée et les marges que nous devrions anticiper.
+    * Nous supposerons que notre architecture dispose des marges requises. (Surcharge éventuelle de requête en journée ou dans certains lieu, absence de requête pendant la nuit...)
+* La confidentialité des utilisateurs et le caractère privé des informations enregistré ne nous permet pas de savoir si l'usage de composants du cloud est envisagable ou si toute l'architecture doit être recréée à la main.
+    * Dans le doute, nous ne fairons pas appel à des composants échappant au controle de PeaceLand.
+* Le cahier des charges ne le précise pas, mais on peut supposer qu'il est important de prévoir un interface permettant de facilement vérifier l'état des différents composants du système pour pouvoir réagir en cas de panne.
 
 La tentative ratée aurait été causée par la quantité de données qui ont surchargées le programme fait par l'équipe précédente. Ils n'auraient pas construit le programme pour être capable de traiter le scaling que pouvait subir leur programme. 
 Ce scaling pouvait être causé par :
