@@ -35,7 +35,7 @@ De quel(s) type(s) de composant(s) (listés dans le cours) l'architecture aura-t
 
 ## Question 1
 
-> Avons nous vraiment besoin du Big Data pour ce problème?
+> Avons-nous vraiment besoin du Big Data pour ce problème?
 
 Étant donné les remarques ci-dessous :
 * La grande quantité de données à stocker (en un an, environ 365 * 200Gb = 73Tb de données stockées)
@@ -45,33 +45,33 @@ De quel(s) type(s) de composant(s) (listés dans le cours) l'architecture aura-t
     * Float : Longitude, latitude, PeaceScore
     * Liste de chaine de caractère : Mots entendus
 
-on en déduit qu'une architecture de type Big Data est nécessaire à ce projet.
+On en déduit qu'une architecture de type Big Data est nécessaire à ce projet.
 
-> Quels priorités choisir parmi les trois du théorème CAP?
+> Quelles priorités choisir parmi les trois du théorème CAP?
 
 Analysons chaque composante CAP d'après la situation décrite dans le sujet :
 * **Consistance (C)** : Elle n'est utile uniquement que dans l'éventualité où les drones seraient amenés à coordonner leurs mouvements entre eux.
-* **Disponibilité (A)** : Elle est importante dans tous les cas. En effet, si le système ne réagissait plus suffisamment rapidement, les rapports des drones auraient tendance à s'accumuler avant d'être traité. On peut cependant supposer que certaines périodes (la nuit notamment) sont propices à une diminution du nombre de requêtes, et que le faible nombre de données générées par chaque drone indépendamment peut être stocké dans l'appareil en attendant d'être traité.
+* **Disponibilité (A)** : Elle est importante dans tous les cas. En effet, si le système ne réagissait plus suffisamment rapidement, les rapports des drones auraient tendance à s'accumuler avant d'être traités. On peut cependant supposer que certaines périodes (la nuit notamment) sont propices à une diminution du nombre de requêtes, et que le faible nombre de données générées par chaque drone indépendamment peut être stocké dans l'appareil en attendant d'être traité.
 * **Résistance aux pannes (P)** : Elle est indispensable au projet, car le système d'alerte doit toujours être opérationnel dans une certaine mesure.
 
 On déduit de l'analyse qu'il faudrait s'orienter vers une architecture *CP* ou *AP* afin de respecter les demandes. Nous allons néanmoins préférer l'architecture *AP*  parce qu'il ne nous est pas demandé de gérer la communication des drones entre eux, ce qui nous permet de négliger la consistance.
 
-> Vers quel type de base de données faut il s'orienter?
+> Vers quel type de base de données faut-il s'orienter?
 
 Étant donné les données contenues dans les rapports, l'idéal pour facilement conserver la trace des rapports sans perte, serait sans doute des bases de données de type *clé-valeur* orientées *par ligne*, on pourrait donc s'orienter vers du SQL ou une technologie similaire.
 
-Quant au stockage des tables, on pourrait utiliser le format de tables Delta *i.e.*, des fichiers parquets. Le format Delta est adapté aux tables lourdes et permet une meilleure distribution des données pour une éventuelle analyse de celles-ci sur un cluster. Le format parquet (intégré au format Delta) ajoute une optimisation sur la lecture des données en stockant celle-ci colonne après colonne sur le disque dur, au lieu de mettre les lignes les unes après les autres. Ainsi les filtre de recherches sont plus rapides car les données d'une même colonne semblent adjacentes. Avec la technologie de tables SQL Delta, on peut utiliser le schéma suivant :
+Quant au stockage des tables, on pourrait utiliser le format de tables Delta *i.e.*, des fichiers parquets. Le format Delta est adapté aux tables lourdes et permet une meilleure distribution des données pour une éventuelle analyse de celles-ci sur un cluster. Le format parquet (intégré au format Delta) ajoute une optimisation sur la lecture des données en stockant celle-ci colonne après colonne sur le disque dur, au lieu de mettre les lignes les unes après les autres. Ainsi les filtres de recherches sont plus rapides, car les données d'une même colonne semblent adjacentes. Avec la technologie de tables SQL Delta, on peut utiliser le schéma suivant :
 
 **Reports :**
 | Id  | PeaceWatcherId | Longitude | Latitude | Time     | HeardWords    | PeaceScores              |
 | --- | -------------- | --------- | -------- | -------- | ------------- | ------------------------ |
 | KEY | KEY            | DOUBLE    | DOUBLE   | DATETIME | ARRAY<STRING> | MAP<Citizen.Id, TINYINT> |
 
-⚠️ Cependant, il ne faut surtout pas utiliser de Data Lake, étant donné que les données sont structurées et ne sont pas assez grosses et variées pour justifier d'une telle technologie. Un Data Lake est davantage orienté pour les données non structurées ou partiellement structurées.
+⚠️ Cependant, il ne faut surtout pas utiliser de Data Lake, étant donné que les données sont structurées et ne sont pas assez grosses et variées pour justifier d'une telle technologie. Un Data Lake est davantage orientée pour les données non structurées ou partiellement structurées.
 
 > Batch ou Stream?
 
-Étant donné la quantité de donnée relativement faible à traiter (3600 * 200Gb / 24 ~ 2Mb par seconde) et la quasi-absence de traitement à effectuer, un stream est préférable pour maximiser la vitesse de traitement des alertes.
+Étant donné la quantité de données relativement faible à traiter (3600 * 200Gb / 24 ~ 2Mb par seconde) et la quasi-absence de traitement à effectuer, un stream est préférable pour maximiser la vitesse de traitement des alertes.
 Une solution alternative consisterait à utiliser un stream pour filtrer les alertes et les traiter avec un système spécifiques tandis que les rapports pourraient passer par un Map-Reduce pour traiter les données afin de favoriser leur stockage.
 
 Étapes que suivraient les données :
