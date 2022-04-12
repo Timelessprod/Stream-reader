@@ -60,7 +60,12 @@ On déduit de l'analyse qu'il faudrait s'orienter vers une architecture *CP* ou 
 
 Étant donné les données contenues dans les rapport, l'idéal pour facilement conserver la trace des rapports sans perte, serait sans doute des bases de données de type *clé-valeur* orientées *par ligne*, on pourrait donc s'orienter vers du SQL ou une technologie similaire.
 
-Quant au stockage des tables, on pourrait utiliser le format de tables Delta *i.e.*, des fichiers parquets. Le format Delta est adapté aux tables lourdes et permet une meilleur distribution des données pour une éventuelle analyse de celles-ci sur un cluster. Le format parquet (intégré au format Delta) ajoute une optimisation sur la lecture des données en stockant celle-ci colonne après colonne sur le disque dur, au lieu de mettre les lignes les unes après les autres. Ainsi les filtre de recherches sont plus rapide car les données d'une même colonne sont adjacentes.
+Quant au stockage des tables, on pourrait utiliser le format de tables Delta *i.e.*, des fichiers parquets. Le format Delta est adapté aux tables lourdes et permet une meilleur distribution des données pour une éventuelle analyse de celles-ci sur un cluster. Le format parquet (intégré au format Delta) ajoute une optimisation sur la lecture des données en stockant celle-ci colonne après colonne sur le disque dur, au lieu de mettre les lignes les unes après les autres. Ainsi les filtre de recherches sont plus rapide car les données d'une même colonne sont adjacentes. Avec la technologie de tables SQL Delta, on peut utiliser le schéma suivant :
+
+**Reports :**
+| Id  | PeaceWatcherId | Longitude | Latitude | Time     | HeardWords    | PeaceScores              |
+| --- | -------------- | --------- | -------- | -------- | ------------- | ------------------------ |
+| KEY | KEY            | DOUBLE    | DOUBLE   | DATETIME | ARRAY<STRING> | MAP<Citizen.Id, TINYINT> |
 
 Cependant, il ne faut surtout pas utiliser de Data Lake, étant donné que les données sont structurées et ne sont pas assez grosses et variées pour justifier d'une telle technologie. Un Data Lake est davantage orienté pour les données non structurées ou partiellement structurées.
 
