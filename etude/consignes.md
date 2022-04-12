@@ -70,12 +70,10 @@ Cependant, il ne faut surtout pas utiliser de Data Lake, étant donné que les d
 Une solution alternative consisterait à utiliser un stream pour filtrer les alertes et les traiter avec un système spécifique tandis que les rapports pourraient passer par un Map-Reduce pour traiter les données afin de favoriser leur stockage
 
 Étapes que suivraient les données :
-(
 * chiffrement éventuel,
 * compression,
 * (déchiffrage et) extraction de données,
 * création de nouvelles caractéristiques à partir des données existantes...
-)
 
 Ainsi, ce problème a des contraintes qui nécessitent l'appel aux technologies du Big Data:
 * Une quantité considérable de données à traiter
@@ -111,5 +109,5 @@ Le rapport contient déjà :
 * Le nom des personnes observées ainsi que leur Peacescore actuel
 * La liste de mots entendus
   
-Pour augmenter l'efficacité des observateurs, on pourrait permettre aux PeaceMakers d'**anticiper les lieux d'intervention** et s'en rapprochant **en ajoutant la moyenne de Peacescore** ainsi que son évolution (i.e. sa dérivée). Cela permetrait d'anticiper les mouvements de foule ou autres paniques générales.
+Pour augmenter l'efficacité des observateurs, on pourrait permettre aux PeaceMakers d'**anticiper les lieux d'intervention** et s'en rapprochant **en ajoutant la moyenne de Peacescore** ainsi que son évolution (i.e. sa dérivée). Cela permettrait d'anticiper les mouvements de foule ou autres paniques générales.
 Car le Peacescore d'un individu est souvent influencé par celui de ceux autour de lui, connaitre la moyenne d'une zone permet d'agir en conséquence.
