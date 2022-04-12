@@ -2,7 +2,7 @@
 
 👉 [Le sujet du projet](https://docs.google.com/document/d/1HhRYSRrJ0bu8Qb4HncIYzhKcCU-pHknSEd40RgFnJis/edit)
 
-👉 [Étude du projet](etude/consignes.md)
+👉 [Rapport](report.md)
 
 Composition du groupe :
 | Nom | @epita.fr | Github |
