@@ -7,7 +7,7 @@
 Composition du groupe :
 | Nom | @epita.fr | Github |
 | - | - | - |
-| Erwan Goudard | `erwan.goudard` | `Goudard` |
+| Erwan Goudard | `erwan.goudard` | `Grouane` |
 | Adrien Merat | `adrien.merat` | `Timelessprod` |
 | Corentin Duchêne| `corentin.duchene` | `Nigiva` |
 | Henri Jamet | `henri.jamet` | `hjamet` |
