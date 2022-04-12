@@ -91,6 +91,26 @@ Pour réponde à ces problématiques, nous devrions faire appel aux composants s
 * *Stream Processing* : Pour filtrer les alertes à traiter le plus rapidement possible et les rapports standards.
 * *Batch Processing* : Pour le traitement des rapports et l'optimisation de leur stockage.
 
+## Question 2
+
+> Quelle contrainte métier l’architecture doit-elle satisfaire pour répondre à l’exigence décrite dans le paragraphe “Alerte” ? Quel composant choisir ?
+
+
+Le traitement des alertes nécessite les contraintes métier suivantes :
+* **Capacité**
+    * Les PeaceMakers devraient pouvoir indiquer leur disponibilité pour une éventuelle intervention.
+    * La gestion des alertes devrait être répartie de manière optimale entre les différents PeaceMaker.
+    * Les PeaceMakers pourraient se voir attribuer des alertes différentes en fonction de leurs compétences.
+* **Nombre**
+    * La gestion des alertes devrait prendre en compte le nombre de PeaceMaker total et diponible.
+* **Ajustement des coûts**
+    * Les alertes devrait être répartis entre les différents PeaceMakers en fonction des éventuels couts d'intervention.
+
+Pour répondre à ces exigences, nous pourrions faire usage des composants suivants
+
+* Pour communiquer rapidement les alertes, nous devrions faire appel à un **stream** pour les traiter dans l'ordre de leur arrivée.
+* Pour transmettre les alertes au Peacemakers, une interface Web devrait être mise en place. Nous pourrions faire appel à un serveur Apache pour ce faire.
+
 ## Question 3
 
 > Quelle(s) erreur(s) de Peaceland peut expliquer la tentative ratée ?
