@@ -1,0 +1,3 @@
+object Stream_Kafka {
+  
+}
