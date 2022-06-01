@@ -1,58 +1,21 @@
 import org.apache.kafka.streams.scala.Serdes._
+import com.goyeau.kafka.streams.circe.CirceSerdes._
 
 class Stream_Kafka(input: DroneReport) {
-
+    // creation builder
     val builder: StreamsBuilder = new StreamsBuilder
 
-    val droneID: KGroupedStreamed[ReportID, DroneID] = builder.stream[ReportID, DroneID]("drone-ID").groupByKey
-    val dronePosition: KGroupedStreamed[ReportID, DronePosition] = builder.stream[ReportID, DronePosition]("drone-position").groupByKey
-    val peaceScoreIDs: KGroupedStreamed[ReportID, PeaceScoreIDs] = builder.stream[ReportID, PeaceScoreIDs]("peacescore-ID").groupByKey      // diff
-    val timestamp: KGroupedStreamed[ReportID, Timestamp] = builder.stream[ReportID, Timestamp]("timestamp").groupByKey
+    // Serde = Serializer/Deserializer : DroneReport <=> JSON
+    val droneRepSerde = new JsonSerde[DroneReport]
 
+    // balance les droneReports dans la stream
+    val droneRepStream = builder.stream[Id[DroneReport], DroneReport]("drone-report")
 
-    // lui je sais pas comment faire le consumer
-    // implicit def consumedFromSerde[K, V](implicit keySerde: Serde[K], valueSerde: Serde[V])
+    // creation producer
+    val config = new Properties()
+    config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")
+    val producer = Producer[DroneReport](config)
 
-
-    val droneReport: KTable[ReportID, DroneReport] = droneID
-        .cogroup[DroneReport]({ case (_, drone, agg) => agg.copy(drone = drone.some) })
-        .cogroup[DronePosition](dronePosition, { case (_, pos, agg) => agg.copy(pos = pos.some)})
-        .cogroup[PeaceScoreIDs](peaceScoreIDs, { case (_, scores, agg) => agg.copy(scores = scores.some)})      // diff
-        .cogroup[Timestamp](timestamp, { case (_, time, agg) => agg.copy(time = time.some)})
-        .aggregate(DroneReport.empty)
-
-
-
-
-
-
-
-
-
-
-
-
-
-    def stream_ReportID() {
-        var inputTopic = input.ReportID.value
-        val stringSerde = Serdes.String()
-        var builder: StreamsBuilder = new StreamsBuilder()
-        builder.stream(inputTopic)
-    }
-
-    def stream_DroneID() {
-
-    }
-
-    def stream_Position() {
-        
-    }
-
-    def stream_PeaceScoreIDs() {
-        
-    }
-
-    def stream_Timestamp() {
-        
-    }
+    // etapes pour envoyer un report (a commenter car la ca le fait 1 fois pour l'exemple)
+    val droneRep = DroneReport("123456789012", "210987654321", "2016-01-01T00:00:00.000Z", 0.0, 0.0, Array("Hello", "I", "am", "a", "PeaceWatcher"), )
 }
