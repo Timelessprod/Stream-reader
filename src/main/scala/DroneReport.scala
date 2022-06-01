@@ -1,11 +1,11 @@
 case class DroneReport(
   reportID: Int,
   droneID: Int,
-  time: Timestamp,
+  time: String,
   longitude: Double,
   latitude: Double,
   heardWords: Array[String],
-  peaceScores: map[Int, Int]
+  peaceScores: Map[Int, Int]
 )
 
 case class Id[Ressource](value: String) extends AnyVal
