@@ -9,11 +9,11 @@ object Main extends App {
     // |   7|   8|
     // +----+----+
     def read_csv(filename: String): DataFrame = 
-        read.csv(filename)
+        read.option("header", true).csv(filename)
 
     // same thing but for JSON file
     def read_json(filename: String): DataFrame =
-        read.json(filename)
+        read.option("header", true).json(filename)
 
     // read a file (csv/JSON) and create an array of drones
     def read(filename: String) = {
