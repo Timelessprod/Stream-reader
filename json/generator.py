@@ -3,7 +3,7 @@ import random
 
 def generate_random_json(n, scenario, scores):
     fake = Faker()
-    json = []
+    reports = []
     for _ in range(n):
         words = [random.choice(scenario) for _ in range(random.randint(1, 10))]
         peaceScores = [{"citizenId": random.randint(1, 1000000), "score": random.randint(scores[0], scores[1])} for _ in range(random.randint(1, 10))]
@@ -16,8 +16,9 @@ def generate_random_json(n, scenario, scores):
             "heardWords": words,
             "peaceScores": peaceScores
         }
-        json.append(report)
+        reports.append(report)
 
+    json = {"reports": reports}
 
     return json
 
