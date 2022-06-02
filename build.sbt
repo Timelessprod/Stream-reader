@@ -26,6 +26,10 @@ version := "1.0"
 // You can define other libraries as dependencies in your build like this:
 
 libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.1"
+libraryDependencies += "org.apache.kafka" % "kafka-clients" % "2.7.0"
+libraryDependencies += "org.apache.kafka" %% "kafka-streams-scala" % "2.7.0"
+// libraryDependencies += "org.apache.spark" %% "spark-streaming-kafka" % "3.2.1"
+libraryDependencies += "org.json4s" % "json4s-native_2.11" % "3.4.0"
 
 // Here, `libraryDependencies` is a set of dependencies, and by using `+=`,
 // we're adding the scala-parser-combinators dependency to the set of dependencies
