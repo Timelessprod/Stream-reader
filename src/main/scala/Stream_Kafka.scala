@@ -58,4 +58,19 @@ class Stream_Kafka(input: DroneReport) {
     // etapes pour envoyer un report (a commenter car la ca le fait 1 fois pour l'exemple)
     // val droneRep = DroneReport(123456789, 987654321, "2016-01-01T00:00:00.000Z", 0.0, 0.0, Array("Hello", "I", "am", "a", "PeaceWatcher"), Map(Array(147852369, 10)))
     
+    val ssx = new StreamingContext(sparkConf, Seconds(1))
+    val kafkaParams = Map[String, Object](
+        "bootstrap.servers" -> "localhost:9092,anotherhost:9092",
+        "key.deserializer" -> Serialization,
+        "value.deserializer" -> Serialization,
+        "group.id" -> "je_sais_pas",
+        "auto.offset.reset" -> "latest",
+        "enable.auto.commit" -> (false: java.lang.Boolean)
+    )
+    val topics = Array("drone-report")
+    val stream = KafkaUtils.createDirectStream[String, DroneReport](
+        ssc,
+        PreferConsistent,
+        Subscribe[String, DroneReport](topics, kafkaParams)
+    ).map{ record => (record.key(), record.value) }
 }
