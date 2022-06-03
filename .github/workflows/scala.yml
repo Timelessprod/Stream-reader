@@ -11,17 +11,33 @@ on:
       - dev
 
 jobs:
-  build:
+  receiverBuild:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build project
-        run: sbt compile
-#  test:
-#    needs: build
+      - name: Build receiver
+      - run: cd receiver
+      - run: sbt compile
+  receiverTest:
+    needs: receiverBuild
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Test receiver
+      - run: cd receiver
+      - run: sbt test
+#  broker1Build:
 #    runs-on: ubuntu-latest
 #    steps:
 #      - uses: actions/checkout@v2
-#      - name: Run tests
-#        run: sbt test
-#        env:
+#      - name: Build broker 1 - hdfs
+#      - run: cd broker1
+#      - run: sbt compile
+#  broker1Test:
+#    needs: broker1Build
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: Test broker 1 - hdfs
+#      - run: cd broker1
+#      - run: sbt test
