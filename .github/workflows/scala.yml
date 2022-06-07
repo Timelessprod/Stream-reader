@@ -15,16 +15,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build receiver
-      - run: cd receiver
+      - name: Build Producer
+      - run: cd producer
       - run: sbt compile
   receiverTest:
     needs: receiverBuild
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Test receiver
-      - run: cd receiver
+      - name: Test Producer
+      - run: cd producer
       - run: sbt test
 #  broker1Build:
 #    runs-on: ubuntu-latest
