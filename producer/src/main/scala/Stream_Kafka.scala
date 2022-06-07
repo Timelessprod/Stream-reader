@@ -6,11 +6,11 @@ import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.apache.kafka.clients.consumer.ConsumerConfig
+import org.apache.kafka.clients.consumer.ConsumerRecords
 import org.apache.kafka.streams.StreamsConfig
 import org.apache.kafka.streams.KafkaStreams
 import scala.collection.JavaConverters._
 import java.time.Duration
-import org.apache.kafka.clients.consumer.ConsumerRecords
 import org.json4s.native.Serialization
 // import org.apache.spark.streaming.StreamingContext
 // import scala.concurrent.duration.Seconds
@@ -45,7 +45,7 @@ class Stream_Kafka(input: DroneReport) {
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")    // il faudra plusieurs broker
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, Serialization)
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, Serialization)
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "myconsumergroup")
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "0001")
         val consumer = new KafkaConsumer[String, DroneReport](props)
         consumer.subscribe(List("drone-report").asJava)
 

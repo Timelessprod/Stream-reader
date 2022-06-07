@@ -6,12 +6,13 @@ import java.time.Duration
 
 
 object Consumer {
+    val props = new Properties()
+    props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")    // il faudra plusieurs broker
+    props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, Serialization)
+    props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, Serialization)
+    props.put(ConsumerConfig.GROUP_ID_CONFIG, "0001")
+    
     def receiveReport() = {
-        val props = new Properties()
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")    // il faudra plusieurs broker
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, Serialization)
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, Serialization)
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "0001")
         val consumer = new KafkaConsumer[String, DroneReport](props)
         consumer.subscribe(List("drone-report").asJava)
 
@@ -20,4 +21,5 @@ object Consumer {
             println(s"offset = ${record.offset()}, key = ${record.key()}, value = ${record.value()}")
         }
     }
+
 }
