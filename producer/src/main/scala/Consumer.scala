@@ -2,7 +2,7 @@ import java.util
 import java.util.Properties
 import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecords, KafkaConsumer}
 // import org.json4s.native.Serialization
-
+import scala.collection.JavaConverters._
 import java.time.Duration
 
 
@@ -17,7 +17,7 @@ object Consumer extends App {
     
     def receiveReport(): Unit = {
         val records: ConsumerRecords[String, String] = consumer.poll(Duration.ofMillis(100))   // ca c'est pour la pate chaude (la pate froide c'est plutot 15min)
-        records.asScala.foreach { record =>
+        records.toList.foreach { record =>
             println(s"offset = ${record.offset()}, key = ${record.key()}, value = ${record.value()}")
 
         receiveReport()
