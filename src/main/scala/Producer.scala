@@ -1,3 +1,10 @@
+import java.util.Properties
+import org.apache.kafka.clients.producer.KafkaProducer
+import org.apache.kafka.clients.producer.ProducerRecord
+import org.apache.kafka.clients.producer.ProducerConfig
+import org.json4s.native.Serialization
+
+
 object Producer {
     // Producer
     def sendReport(droneReport: DroneReport, producer: KafkaProducer[String, DroneReport]) = {
