@@ -21,39 +21,39 @@ import org.json4s.native.Serialization
 
 
 class Stream_Kafka(input: DroneReport) {
-    // Producer
-    def sendReport(droneReport: DroneReport, producer: KafkaProducer[String, DroneReport]) = {
-        val record = new ProducerRecord[String, DroneReport]("drone-report", droneReport.reportID.toString, droneReport)
-        producer.send(record)
-    }
+    // // Producer
+    // def sendReport(droneReport: DroneReport, producer: KafkaProducer[String, DroneReport]) = {
+    //     val record = new ProducerRecord[String, DroneReport]("drone-report", droneReport.reportID.toString, droneReport)
+    //     producer.send(record)
+    // }
 
-    def sendRecords(droneReports: List[DroneReport]) = {
-        val props = new Properties()
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")    // il faudra plusieurs broker
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, Serialization)
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, Serialization)
-        val producer = new KafkaProducer[String, DroneReport](props)
+    // def sendRecords(droneReports: List[DroneReport]) = {
+    //     val props = new Properties()
+    //     props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")    // il faudra plusieurs broker
+    //     props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, Serialization)
+    //     props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, Serialization)
+    //     val producer = new KafkaProducer[String, DroneReport](props)
 
-        droneReports.foreach { record => sendReport(record, producer) }
+    //     droneReports.foreach { record => sendReport(record, producer) }
 
-        producer.close()
-    }
+    //     producer.close()
+    // }
 
-    // Consumer
-    def receiveReport() = {
-        val props = new Properties()
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")    // il faudra plusieurs broker
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, Serialization)
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, Serialization)
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "0001")
-        val consumer = new KafkaConsumer[String, DroneReport](props)
-        consumer.subscribe(List("drone-report").asJava)
+    // // Consumer
+    // def receiveReport() = {
+    //     val props = new Properties()
+    //     props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")    // il faudra plusieurs broker
+    //     props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, Serialization)
+    //     props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, Serialization)
+    //     props.put(ConsumerConfig.GROUP_ID_CONFIG, "0001")
+    //     val consumer = new KafkaConsumer[String, DroneReport](props)
+    //     consumer.subscribe(List("drone-report").asJava)
 
-        val records: ConsumerRecords[String, DroneReport] = consumer.poll(Duration.ofMillis(100))   // ca c'est pour la pate chaude (la pate froide c'est plutot 15min)
-        records.asScala.foreach { record =>
-            println(s"offset = ${record.offset()}, key = ${record.key()}, value = ${record.value()}")
-        }
-    }
+    //     val records: ConsumerRecords[String, DroneReport] = consumer.poll(Duration.ofMillis(100))   // ca c'est pour la pate chaude (la pate froide c'est plutot 15min)
+    //     records.asScala.foreach { record =>
+    //         println(s"offset = ${record.offset()}, key = ${record.key()}, value = ${record.value()}")
+    //     }
+    // }
 
     // balance les droneReports dans la stream
     // val droneRepStream = builder.stream[Id[DroneReport], DroneReport]("drone-report")
@@ -88,7 +88,7 @@ class Stream_Kafka(input: DroneReport) {
 
     val builder = new StreamsBuilder()
     // Read the input Kafka topic into a KStream instance
-    val stream = builder.stream[String, String]("drone-report")
+    val stream = builder.stream[String, DroneReport]("drone-report")
 
     // Do what we want in a map
     // val doWhatWeWant
@@ -100,6 +100,7 @@ class Stream_Kafka(input: DroneReport) {
     val streams = new KafkaStreams(builder.build(), streamConf)
     streams.start()
 
+    // streams.waitUntil()
 
 
 }
