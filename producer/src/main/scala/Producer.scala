@@ -1,7 +1,5 @@
 import java.util.Properties
-import org.apache.kafka.clients.producer.KafkaProducer
-import org.apache.kafka.clients.producer.ProducerRecord
-import org.apache.kafka.clients.producer.ProducerConfig
+import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, ProducerRecord, RecordMetadata}
 import org.json4s.native.Serialization
 
 
@@ -14,11 +12,17 @@ object Producer {
 
     def sendReport(droneReport: DroneReport, producer: KafkaProducer[String, DroneReport]) = {
         val record = new ProducerRecord[String, DroneReport]("drone-report", droneReport.reportID.toString, droneReport)
-        producer.send(record)
+        producer.send(record, (metadata: RecordMetadata, exception: Exception) => {
+            if (exception != null) {
+                exception.printStackTrace()
+            } else {
+                println(s"Metadata about the sent record: $metadata")
+            }
+        })
     }
 
     def sendRecords(droneReports: List[DroneReport]) = {
-        val producer = new KafkaProducer[String, DroneReport](props)
+        val producer = new KafkaProducer[String, DroneReport](this.props)
 
         droneReports.foreach { record => sendReport(record, producer) }
 
