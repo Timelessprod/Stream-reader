@@ -14,30 +14,29 @@ jobs:
   receiverBuild:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Build Producer
-      - run: cd producer
-      - run: sbt compile
+     - uses: actions/checkout@v2
+     - name: Build Producer
+     - run: cd producer && sbt compile
   receiverTest:
     needs: receiverBuild
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Test Producer
-      - run: cd producer
-      - run: sbt test
+     - uses: actions/checkout@v2
+     - name: Test Producer
+     - run: cd producer
+     - run: sbt test
 #  broker1Build:
 #    runs-on: ubuntu-latest
 #    steps:
-#      - uses: actions/checkout@v2
-#      - name: Build broker 1 - hdfs
-#      - run: cd broker1
-#      - run: sbt compile
+#     - uses: actions/checkout@v2
+#     - name: Build broker 1 - hdfs
+#     - run: cd broker1
+#     - run: sbt compile
 #  broker1Test:
 #    needs: broker1Build
 #    runs-on: ubuntu-latest
 #    steps:
-#      - uses: actions/checkout@v2
-#      - name: Test broker 1 - hdfs
-#      - run: cd broker1
-#      - run: sbt test
+#     - uses: actions/checkout@v2
+#     - name: Test broker 1 - hdfs
+#     - run: cd broker1
+#     - run: sbt test
