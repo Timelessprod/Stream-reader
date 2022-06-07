@@ -17,7 +17,7 @@ object Consumer extends App {
     
     def receiveReport(): Unit = {
         val records: ConsumerRecords[String, String] = consumer.poll(Duration.ofMillis(100))   // ca c'est pour la pate chaude (la pate froide c'est plutot 15min)
-        records.toList.foreach { record =>
+        records.asScala.foreach { record =>
             println(s"offset = ${record.offset()}, key = ${record.key()}, value = ${record.value()}")
 
         receiveReport()
