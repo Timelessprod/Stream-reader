@@ -52,10 +52,6 @@ object Producer {
         // je sais pas comment ils sont rangés et créer là donc faudra vérifier
         val droneReports = readJson("../json/s1.json")
 
-
-        /*val test = readJson("../test.json")
-        println(test.getClass.getName)
-        println(test(0).getClass.getName)
-        sendReports(test)*/
+        sendReports(droneReports)
     }
 }
