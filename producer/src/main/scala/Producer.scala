@@ -1,14 +1,11 @@
 import java.util.Properties
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, ProducerRecord, RecordMetadata}
-import org.json4s.native.Serialization
 
 
 object Producer extends App {
     val props = new Properties()
 
     props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")    // il faudra plusieurs broker
-    // props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, Serialization)
-    // props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, Serialization)
     props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer")
     props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer")
 

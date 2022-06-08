@@ -29,9 +29,11 @@ scalacOptions += "-deprecation"
 libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.1"
 libraryDependencies += "org.apache.kafka" % "kafka-clients" % "2.7.0"
 libraryDependencies += "org.apache.kafka" %% "kafka-streams-scala" % "2.7.0"
+libraryDependencies += "org.apache.kafka" % "kafka-streams" % "2.1.0"
 libraryDependencies += "org.apache.spark" %% "spark-streaming-kafka-0-10" % "3.2.1"
 libraryDependencies += "org.json4s" % "json4s-native_2.11" % "3.4.0"
-libraryDependencies += "org.apache.kafka" % "kafka-streams" % "2.1.0"
+libraryDependencies += "com.lihaoyi" %% "upickle" % "0.9.5"
+libraryDependencies += "com.lihaoyi" %% "os-lib" % "0.2.7"
 
 // Here, `libraryDependencies` is a set of dependencies, and by using `+=`,
 // we're adding the scala-parser-combinators dependency to the set of dependencies
