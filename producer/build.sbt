@@ -27,13 +27,13 @@ scalacOptions += "-deprecation"
 // You can define other libraries as dependencies in your build like this:
 
 libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.1"
-libraryDependencies += "org.apache.kafka" % "kafka-clients" % "3.1.0"
-libraryDependencies += "org.apache.kafka" %% "kafka-streams-scala" % "3.1.0"
+libraryDependencies += "org.apache.kafka" % "kafka-clients" % "2.7.0"
+libraryDependencies += "org.apache.kafka" %% "kafka-streams-scala" % "2.7.0"
 libraryDependencies += "org.apache.spark" %% "spark-streaming-kafka-0-10" % "3.2.1"
-libraryDependencies += "org.apache.spark" %% "spark-core" % "3.2.1"
-libraryDependencies += "org.apache.spark" %% "spark-sql" % "3.2.1"
-libraryDependencies += "org.json4s" % "json4s-native_2.11" % "4.0.5"
-libraryDependencies += "org.apache.kafka" % "kafka-streams" % "3.1.0"
+//libraryDependencies += "org.apache.spark" %% "spark-core" % "3.2.1"
+//libraryDependencies += "org.apache.spark" %% "spark-sql" % "3.2.1"
+libraryDependencies += "org.json4s" % "json4s-native_2.11" % "3.4.0"
+libraryDependencies += "org.apache.kafka" % "kafka-streams" % "2.1.0"
 libraryDependencies += "org.apache.logging.log4j" % "log4j-core" % "2.17.2"
 
 // Here, `libraryDependencies` is a set of dependencies, and by using `+=`,

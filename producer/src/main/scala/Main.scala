@@ -1,6 +1,6 @@
 import org.apache.spark.sql.SparkSession
 
-object Main extends App {
+object Main {
     // read a JSON from the pathfile and return a DataFrame
     // +----+----+
     // |ColA|ColB|
@@ -14,7 +14,7 @@ object Main extends App {
     //    read.option("header", true).json(filename)
 
     def main(args: Array[String]): Unit = {
-      val spark = SparkSession
+
     }
 
 }
