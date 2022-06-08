@@ -21,6 +21,7 @@ object Producer {
         data("reports").arr
     }
 
+    // envoie UN report dans la stream
     def sendReport(droneReport: ujson.Value, producer: KafkaProducer[String, ujson.Value]) = {
         val record = new ProducerRecord[String, ujson.Value]("drone-report", droneReport("reportId").toString, droneReport)
         producer.send(record, (metadata: RecordMetadata, exception: Exception) => {
@@ -32,6 +33,7 @@ object Producer {
         })
     }
 
+    // envoie tous les reports dans l'array dans la stream
     def sendReports(droneReports: ArrayBuffer[ujson.Value]) = {
         val producer = new KafkaProducer[String, ujson.Value](this.props)
 
@@ -47,9 +49,9 @@ object Producer {
         val droneReports = readJson("../json/s1.json")
 
 
-        /*val test = readJson("../test.json")
+        val test = readJson("../test.json")
         println(test.getClass.getName)
         println(test(0).getClass.getName)
-        sendReports(test)*/
+        sendReports(test)
     }
 }
