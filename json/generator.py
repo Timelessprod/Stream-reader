@@ -1,4 +1,5 @@
 from faker import Faker
+import json
 import random
 
 def generate_random_json(n, scenario, scores):
@@ -43,7 +44,7 @@ scenario_3 = random.sample(bad_words, 5) + random.sample(good_words, 5) + random
 
 def write_json_to_file(name, scenario, scores):
     with open("json/" + name + ".json", "w") as f:
-        f.write(str(generate_random_json(1000, scenario, scores)))
+        f.write(json.dumps(generate_random_json(1000, scenario, scores)))
 
 
 if __name__ == "__main__":
