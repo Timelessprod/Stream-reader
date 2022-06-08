@@ -1,5 +1,3 @@
-import org.apache.spark.sql.SparkSession
-
 object Main {
     // read a JSON from the pathfile and return a DataFrame
     // +----+----+
@@ -14,7 +12,7 @@ object Main {
     //    read.option("header", true).json(filename)
 
     def main(args: Array[String]): Unit = {
-
+        Producer.run()
     }
 
 }
