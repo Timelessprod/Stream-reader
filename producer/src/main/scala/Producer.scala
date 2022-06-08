@@ -1,9 +1,12 @@
 import ujson._
+
 import scala.io.Source
 import java.util.Properties
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, ProducerRecord, RecordMetadata}
-import org.apache.logging.log4j.{Logger, LogManager}
+import org.apache.logging.log4j.{LogManager, Logger}
+
 import scala.collection.mutable.ArrayBuffer
+import scala.concurrent.Future
 
 object Producer {
     lazy val logger: Logger = LogManager.getLogger(getClass.getName)
@@ -15,14 +18,15 @@ object Producer {
     props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer")
 
     // récupère le json sous forme d'array de map des droneReports
-    def readJson(filename: String) = {
-        val jsonString = Source.fromFile(filename).getLines().mkString
-        val data = ujson.read(jsonString)
+    def readJson(filename: String): ArrayBuffer[Value] = {
+        val jsonString = Source.fromFile(filename)
+        val data = ujson.read(jsonString.getLines().mkString)
+        jsonString.close()
         data("reports").arr
     }
 
     // envoie UN report dans la stream
-    def sendReport(droneReport: ujson.Value, producer: KafkaProducer[String, ujson.Value]) = {
+    def sendReport(droneReport: ujson.Value, producer: KafkaProducer[String, ujson.Value]): java.util.concurrent.Future[RecordMetadata] = {
         val record = new ProducerRecord[String, ujson.Value]("drone-report", droneReport("reportId").toString, droneReport)
         producer.send(record, (metadata: RecordMetadata, exception: Exception) => {
             if (exception != null) {
@@ -34,7 +38,7 @@ object Producer {
     }
 
     // envoie tous les reports dans l'array dans la stream
-    def sendReports(droneReports: ArrayBuffer[ujson.Value]) = {
+    def sendReports(droneReports: ArrayBuffer[ujson.Value]): Unit = {
         val producer = new KafkaProducer[String, ujson.Value](this.props)
 
         droneReports.foreach { record => sendReport(record, producer) }
@@ -44,7 +48,7 @@ object Producer {
         logger.info("Producer closed")
     }
     
-    def run() = {
+    def run(): Unit = {
         // je sais pas comment ils sont rangés et créer là donc faudra vérifier
         val droneReports = readJson("../json/s1.json")
 
