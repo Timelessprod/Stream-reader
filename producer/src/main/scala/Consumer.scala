@@ -13,7 +13,7 @@ object Consumer extends App {
     // props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, Serialization)
     props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer")
     props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer")
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "0001")
+    props.put(ConsumerConfig.GROUP_ID_CONFIG, "0001")
     
     def receiveReport(): Unit = {
         val records: ConsumerRecords[String, String] = consumer.poll(Duration.ofMillis(100))   // ca c'est pour la pate chaude (la pate froide c'est plutot 15min)

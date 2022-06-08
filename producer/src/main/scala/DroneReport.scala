@@ -7,5 +7,3 @@ case class DroneReport(
   heardWords: Array[String],
   peaceScores: Map[Int, Int]
 )
-
-case class Id[Ressource](value: String) extends AnyVal
