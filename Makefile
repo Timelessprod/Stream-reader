@@ -1,8 +1,8 @@
-.PHONY: run start_kafka create_topic producer clean
+.PHONY: run start_kafka create_topic producer consumer clean
 
 TOPIC="drone-report"
 
-run: start_kafka producer
+run: start_kafka producer consumer
 
 # danger ca crée maybe des zombies donc a pas trop lancer sinon reboot PC
 start_kafka:
@@ -14,6 +14,9 @@ create_topic:
 
 producer:
 	cd producer && sbt run
+
+consumer:
+	cd consumer && sbt run
 
 # mettre un truc pour tuer les zombies ?
 clean:

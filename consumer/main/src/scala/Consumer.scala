@@ -6,7 +6,7 @@ import scala.collection.JavaConverters._
 import java.time.Duration
 
 
-object Consumer extends App {
+object Consumer {
     lazy val logger: Logger = LogManager.getLogger(getClass.getName)
     val props = new Properties()
 

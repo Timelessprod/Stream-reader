@@ -56,15 +56,15 @@ object Producer {
     def run(): Unit = {
         // je sais pas comment ils sont rangés et créer là donc faudra vérifier
         val droneReports = readJson("../json/s1.json")
-        sendReports(droneReports)
+        // sendReports(droneReports)
 
 
-        /*println("test is testing")
+        println("test is testing")
         val test = readJson("../test.json")
         println(test.getClass.getName)
         println(test(0).getClass.getName)
         println(test(0).toString)
-        sendReports(test)*/
+        sendReports(test)/**/
         println("I did it ?!")
     }
 }
