@@ -13,7 +13,7 @@ scalaVersion := "2.13.8"
 
 // It's possible to define many kinds of settings, such as:
 
-name := "PeaceLand"
+name := "PeaceLand Producer"
 organization := "fr.epita.scia.2023"
 version := "1.0"
 

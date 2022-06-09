@@ -1,11 +1,12 @@
 import ujson._
+
 import scala.io.Source
 import java.util.Properties
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, ProducerRecord, RecordMetadata}
-import org.apache.logging.log4j.{Logger, LogManager}
-import scala.collection.mutable.ArrayBuffer
-import org.apache.kafka.common.serialization.Serde
+import org.apache.logging.log4j.{LogManager, Logger}
 
+import scala.collection.mutable.ArrayBuffer
+import scala.concurrent.Future
 
 object Producer {
     lazy val logger: Logger = LogManager.getLogger(getClass.getName)
@@ -22,9 +23,10 @@ object Producer {
     //     data : ArrayBuffer[ujson.Value]
     //     data(0) : ujson.Value
     //     data(0)("reportId") : Int (attribut reportId du premier report)
-    def readJson(filename: String) = {
-        val jsonString = Source.fromFile(filename).getLines().mkString
-        val data = ujson.read(jsonString)
+    def readJson(filename: String): ArrayBuffer[Value] = {
+        val jsonString = Source.fromFile(filename)
+        val data = ujson.read(jsonString.getLines().mkString)
+        jsonString.close()
         data("reports").arr
     }
 
@@ -51,7 +53,7 @@ object Producer {
         logger.info("Producer closed")
     }
     
-    def run() = {
+    def run(): Unit = {
         // je sais pas comment ils sont rangés et créer là donc faudra vérifier
         val droneReports = readJson("../json/s1.json")
         sendReports(droneReports)
