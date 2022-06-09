@@ -29,8 +29,11 @@ object Consumer {
         logger.info(s"${records.count()} report(s) received")
         println(s"${records.count()} report(s) received")
 
-        receiveReport(consumer)
         println("test 4")
+        consumer.commitSync()
+
+        receiveReport(consumer)
+        println("test 5")
         
     }
 
@@ -70,14 +73,22 @@ object Consumer {
 
     val content: Map[String, String] = Map()
 
-    val records: ConsumerRecords[String, String] = consumer.poll(Duration.ofMillis(100))
-    records.asScala.foreach(record => {
-        content + (record.key() -> record.value())
-        logger.info(s"Offset: ${record.offset()} Key: ${record.key()} Value: ${record.value()}")
-    })
-    logger.info("test")
+    def receiveReport(): Unit = {
+        val records: ConsumerRecords[String, String] = this.consumer.poll(Duration.ofMillis(100))
+        records.asScala.foreach(record => {
+            content + (record.key() -> record.value())
+            logger.info(s"Offset: ${record.offset()} Key: ${record.key()} Value: ${record.value()}")
+        })
+        
+        logger.info(s"${records.count()} report(s) received")
+
+        this.consumer.commitSync()
+
+        receiveReport()
+    }
 
     def run(): Unit = {
+        receiveReport()
         consumer.commitSync()
     }
 }
