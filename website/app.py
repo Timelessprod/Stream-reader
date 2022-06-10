@@ -3,6 +3,7 @@
 # ---------------------------------------------------------------------------- #
 import logging
 import flask
+import kafka_consumer
 import turbo_flask
 import threading
 import time
@@ -15,6 +16,7 @@ from config import parameters
 #                                  PARAMETERS                                  #
 # ---------------------------------------------------------------------------- #
 UPDATE_TIME = parameters["web_update_time"]
+REPORT_NUMBER = parameters["report_number"]
 
 # ---------------------------------------------------------------------------- #
 #                                INITIALISATION                                #
@@ -36,10 +38,14 @@ def update_load():
     with app.app_context():
         while True:
             time.sleep(UPDATE_TIME)
-            alert_list.append(Alert(str(time.time()), 0, 0, "Nom du citoyen!"))
-            report_list.append(
-                Report({"test": 1, "bebe": "truc", "poulpe": [1, 2, "pouce"]})
-            )
+            # alert_list.append(Alert(str(time.time()), 0, 0, "Nom du citoyen!"))
+            # report_list.append(
+            #     Report({"test": 1, "bebe": "truc", "poulpe": [1, 2, "pouce"]})
+            # )
+            alert, report = kafka_consumer.get_alert_and_report()
+            alert_list.extend(alert)
+            report_list.extend(report)
+            report_list = report_list[:10]
             turbo.push(
                 turbo.update(flask.render_template("alert_list.html"), "alert_list_div")
             )
