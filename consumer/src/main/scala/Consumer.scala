@@ -14,11 +14,14 @@ import org.apache.spark.sql.SparkSession
 
 
 object Consumer {
+    // logger
     lazy val logger: Logger = LogManager.getLogger(this.getClass)
 
-    val spark = SparkSession.builder().appName("Consumer").getOrCreate()
-    import spark.implicits._
+    // spark
+    // val spark = SparkSession.builder().appName("Consumer").getOrCreate()
+    // import spark.implicits._
 
+    // config for the consumer
     val props: Properties = new Properties()
     props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")
     props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer")
@@ -30,16 +33,8 @@ object Consumer {
     consumer.subscribe(util.Collections.singletonList(topic))
 
     // val content: Map[String, String] = Map()
-    //
-    // val records: ConsumerRecords[String, String] = consumer.poll(Duration.ofMillis(10000))
-    // records.asScala.foreach(record => {
-    //     content + (record.key() -> record.value())
-    //     println(s"Offset: ${record.offset()} Key: ${record.key()} Value: ${record.value()}")
-    // })
-    // logger.info("test")
 
-    // def stringToJson(str: String)
-
+    // infinite loop to get reports from the stream
     @tailrec
     def receiveReport(consumer: KafkaConsumer[String, String]): Unit = {
         val records: ConsumerRecords[String, String] = consumer.poll(Duration.ofMillis(100))
@@ -50,8 +45,8 @@ object Consumer {
             println(recordString)
             val recordJson = JString(recordString)
             println(recordJson)
-            val df = spark.read.json(Seq(recordString).toDS)
-            println(df)
+            // val df = spark.read.json(Seq(recordString).toDS)
+            // println(df)
         })
         logger.info(s"${records.count()} report(s) received")
 
@@ -59,34 +54,6 @@ object Consumer {
 
         receiveReport(consumer)
     }
-
-    //@tailrec
-    //def myForEach(record: ConsumerRecord[String, String], recordIter: Iterator[ConsumerRecord[String, String]], oldContent: Map[String, String]): Map[String, String] = {
-    //    val content = oldContent + (record.key() -> record.value())
-    //    logger.info(s"Offset: ${record.offset()} Key: ${record.key()} Value: ${record.value()}")
-    //
-    //    if (recordIter.hasNext) {
-    //        myForEach(recordIter.next().records(new TopicPartition(this.topic, 1)).get(0), recordIter.next().iterator, content)
-    //
-    //    } else
-    //        content
-    //}
-    //
-    //@tailrec
-    //def receiveReport(): Unit = {
-    //    val records: ConsumerRecords[String, String] = this.consumer.poll(Duration.ofMillis(100))
-    //    /*records.asScala.foreach(record => {
-    //        this.content + (record.key() -> record.value())
-    //        logger.info(s"Offset: ${record.offset()} Key: ${record.key()} Value: ${record.value()}")
-    //    })*/
-    //    val content = myForEach(records.records(new TopicPartition(this.topic, 1)).get(0), records.iterator, new Map[String, String]())
-    //
-    //    logger.info(s"${records.count()} report(s) received")
-    //
-    //    this.consumer.commitSync()
-    //
-    //    receiveReport()
-    //}
 
     def run(): Unit = {
         logger.info("Runnig Consumer")
