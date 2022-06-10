@@ -13,7 +13,7 @@ create_topic:
 	kafka-topics.sh --create --topic $(TOPIC) --bootstrap-server localhost:9092
 
 producer:
-	cd producer && sbt run
+	cd producer && sbt "run ../json/s1.json"
 
 consumer:
 	cd consumer && sbt run

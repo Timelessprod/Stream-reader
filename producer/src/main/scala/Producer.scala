@@ -53,13 +53,17 @@ object Producer {
         logger.info("Producer closed")
     }
     
-    def run(): Unit = {
-        // je sais pas comment ils sont rangés et créer là donc faudra vérifier
-        val droneReports = readJson("../json/s1.json")
-        sendReports(droneReports)
+    def run(jsonpath: String): Unit = {
+        if (jsonpath.isEmpty) {
+            val droneReports = readJson("../json/s1.json")
+        }
+        else {
+            val droneReports = readJson(jsonpath)
+        }
+        // sendReports(droneReports)
 
 
-        // val test = readJson("../test.json")
-        // sendReports(test)
+        val test = readJson("../test.json")
+        sendReports(test)
     }
 }

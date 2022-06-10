@@ -10,12 +10,14 @@ import java.util.Properties
 import java.util
 import scala.annotation.tailrec
 import org.json4s.JString
-// import spark.implicits._
+import org.apache.spark.sql.SparkSession
 
 
 object Consumer {
     lazy val logger: Logger = LogManager.getLogger(this.getClass)
 
+    val spark = SparkSession.builder().appName("Consumer").getOrCreate()
+    import spark.implicits._
 
     val props: Properties = new Properties()
     props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")
@@ -45,11 +47,11 @@ object Consumer {
         records.asScala.foreach(record => {
             println(s"offset = ${record.offset()}, key = ${record.key()}, value = ${record.value()}")
             val recordString = record.value().toString
-            // println(recordString)
+            println(recordString)
             val recordJson = JString(recordString)
-            // println(recordJson)
-            // val df = spark.read.json(Seq(jsonStr).toDS)
-            // println(df)
+            println(recordJson)
+            val df = spark.read.json(Seq(recordString).toDS)
+            println(df)
         })
         logger.info(s"${records.count()} report(s) received")
 
