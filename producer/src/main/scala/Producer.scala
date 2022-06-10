@@ -54,10 +54,10 @@ object Producer {
     
     def run(jsonpath: String): Unit = {
         val droneReports = readJson(jsonpath)
-        // sendReports(droneReports)
+        sendReports(droneReports)
 
 
-        val test = readJson("../test.json")
-        sendReports(test)
+        // val test = readJson("../test.json")
+        // sendReports(test)
     }
 }
