@@ -55,5 +55,9 @@ object Producer {
     def run(jsonpath: String): Unit = {
         val droneReports = readJson(jsonpath)
         sendReports(droneReports)
+
+
+        // val test = readJson("../test.json")
+        // sendReports(test)
     }
 }

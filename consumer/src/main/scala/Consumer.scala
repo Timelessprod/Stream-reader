@@ -10,7 +10,7 @@ import java.util.Properties
 import java.util
 import scala.annotation.tailrec
 import org.json4s.JString
-// import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.SparkSession
 
 
 object Consumer {
@@ -18,8 +18,8 @@ object Consumer {
     lazy val logger: Logger = LogManager.getLogger(this.getClass)
 
     // spark
-    // val spark = SparkSession.builder().appName("Consumer").config("spark.master", "local[*]").getOrCreate()
-    // import spark.implicits._
+    val spark = SparkSession.builder().appName("Consumer").config("spark.master", "local[*]").getOrCreate()
+    import spark.implicits._
 
     // config for the consumer
     val props: Properties = new Properties()
@@ -42,10 +42,8 @@ object Consumer {
         records.asScala.foreach(record => {
             println(s"offset = ${record.offset()}, key = ${record.key()}, value = ${record.value()}")
             val recordString = record.value().toString
-            println(recordString)
-            val recordJson = JString(recordString)
-            println(recordJson)
-            // val df = spark.read.json(Seq(recordString).toDS)
+            // println(recordString)
+            val df = spark.read.json(Seq(recordString).toDS)
             // println(df)
         })
         logger.info(s"${records.count()} report(s) received")
