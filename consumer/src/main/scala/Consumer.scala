@@ -29,8 +29,11 @@ object Consumer {
         logger.info(s"${records.count()} report(s) received")
         println(s"${records.count()} report(s) received")
 
-        receiveReport(consumer)
         println("test 4")
+        consumer.commitSync()
+
+        receiveReport(consumer)
+        println("test 5")
         
     }
 
@@ -45,10 +48,11 @@ object Consumer {
     }
 
 =======*/
-import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecords, KafkaConsumer}
+import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecord, ConsumerRecords, KafkaConsumer}
 import io.circe._
 import io.circe.parser._
 import org.apache.logging.log4j.{LogManager, Logger}
+import org.apache.kafka.common.TopicPartition
 
 import java.time.Duration
 import scala.collection.JavaConverters._
@@ -85,15 +89,42 @@ object Consumer {
 
         records.asScala.foreach(record => {
             println(s"offset = ${record.offset()}, key = ${record.key()}, value = ${record.value()}")
+
         })
         logger.info(s"${records.count()} report(s) received")
 
         receiveReport(consumer)
     }
 
+    //@tailrec
+    //def myForEach(record: ConsumerRecord[String, String], recordIter: Iterator[ConsumerRecord[String, String]], oldContent: Map[String, String]): Map[String, String] = {
+    //    val content = oldContent + (record.key() -> record.value())
+    //    logger.info(s"Offset: ${record.offset()} Key: ${record.key()} Value: ${record.value()}")
+    //
+    //    if (recordIter.hasNext) {
+    //        myForEach(recordIter.next().records(new TopicPartition(this.topic, 1)).get(0), recordIter.next().iterator, content)
+    //
+    //    } else
+    //        content
+    //}
+    //
+    //@tailrec
+    //def receiveReport(): Unit = {
+    //    val records: ConsumerRecords[String, String] = this.consumer.poll(Duration.ofMillis(100))
+    //    /*records.asScala.foreach(record => {
+    //        this.content + (record.key() -> record.value())
+    //        logger.info(s"Offset: ${record.offset()} Key: ${record.key()} Value: ${record.value()}")
+    //    })*/
+    //    val content = myForEach(records.records(new TopicPartition(this.topic, 1)).get(0), records.iterator, new Map[String, String]())
+    //
+    //    logger.info(s"${records.count()} report(s) received")
+    //
+    //    this.consumer.commitSync()
+    //
+    //    receiveReport()
+    //}
 
     def run(): Unit = {
-        receiveReport(consumer)
-        consumer.commitSync()
+        receiveReport(this.consumer)
     }
 }

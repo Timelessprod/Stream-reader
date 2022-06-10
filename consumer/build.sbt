@@ -30,7 +30,9 @@ libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % 
 libraryDependencies += "org.apache.kafka" % "kafka-clients" % "2.7.0"
 libraryDependencies += "org.apache.kafka" %% "kafka-streams-scala" % "2.7.0"
 libraryDependencies += "org.apache.spark" %% "spark-streaming-kafka-0-10" % "3.2.1"
-libraryDependencies += "org.json4s" % "json4s-native_2.11" % "3.4.0"
+libraryDependencies += "org.apache.spark" % "spark-streaming_2.13" % "3.2.1"
+libraryDependencies += "org.json4s" % "json4s-native_2.13" % "4.0.5"
+libraryDependencies += "org.apache.spark" %% "spark-sql" % "3.2.1"
 libraryDependencies += "org.apache.kafka" % "kafka-streams" % "2.1.0"
 libraryDependencies += "org.apache.logging.log4j" % "log4j-core" % "2.17.2"
 libraryDependencies += "com.lihaoyi" %% "upickle" % "0.9.5"
@@ -38,11 +40,9 @@ libraryDependencies += "com.lihaoyi" %% "os-lib" % "0.8.0"
 
 val circeVersion = "0.14.1"
 
-libraryDependencies ++= Seq(
-  "io.circe" %% "circe-core",
-  "io.circe" %% "circe-generic",
-  "io.circe" %% "circe-parser"
-).map(_ % circeVersion)
+libraryDependencies += "io.circe" %% "circe-core" % circeVersion
+libraryDependencies += "io.circe" %% "circe-generic" % circeVersion
+libraryDependencies += "io.circe" %% "circe-parser" % circeVersion
 
 // Here, `libraryDependencies` is a set of dependencies, and by using `+=`,
 // we're adding the scala-parser-combinators dependency to the set of dependencies
