@@ -17,7 +17,7 @@ object ConsumerSpark {
 
     val topic = "drone-report"
 
-    val topics = new TopicPartition(this.topic, 1)
+    val topics: Array[String] = Array(this.topic)
 
     val kafkaParams: Map[String, Object] = Map[String, Object](
         "bootstrap.servers" -> "localhost:9092",
