@@ -18,7 +18,7 @@ object Consumer {
     lazy val logger: Logger = LogManager.getLogger(this.getClass)
 
     // spark
-    // val spark = SparkSession.builder().appName("Consumer").getOrCreate()
+    // val spark = SparkSession.builder().appName("Consumer").config("spark.master", "local[*]").getOrCreate()
     // import spark.implicits._
 
     // config for the consumer
