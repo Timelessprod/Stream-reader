@@ -33,4 +33,11 @@ object ConsumerSpark {
         PreferConsistent,
         Subscribe[String, String](topics, kafkaParams)
     ).map(record => record.value)
+
+    // 2nd method
+
+    val bootstrapServer: String = "localhost:9092"
+    val nameNode: String = "hdfs://localhost: 8020"
+
+
 }

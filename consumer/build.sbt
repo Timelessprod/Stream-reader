@@ -26,7 +26,7 @@ scalacOptions += "-deprecation"
 // Want to use a published library in your project?
 // You can define other libraries as dependencies in your build like this:
 
-libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.1"
+libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2"
 libraryDependencies += "org.apache.kafka" % "kafka-clients" % "2.7.0"
 libraryDependencies += "org.apache.kafka" %% "kafka-streams-scala" % "2.7.0"
 libraryDependencies += "org.apache.spark" %% "spark-streaming-kafka-0-10" % "3.2.1"
