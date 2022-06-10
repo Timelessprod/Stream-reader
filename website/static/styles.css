@@ -1,0 +1,78 @@
+@import url(https://fonts.googleapis.com/css?family=Lato);
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    max-width: 900px;
+    margin: 1em auto 2em;
+    font-family: Lato, Arial;
+}
+
+.wrap {
+    padding-left: 1.4em;
+    padding-right: 1.4em;
+}
+
+h1 {
+    text-align: center;
+    border: 2px solid #ddd;
+    padding: 1em;
+    margin-bottom: 1em;
+
+}
+
+h2 {
+    border-bottom: 1px solid #ddd;
+}
+
+a {
+    text-decoration: none;
+    color: #2ecc71;
+}
+
+a:hover {
+    color: #27ae60;
+}
+
+
+/* Alert Box CSS */
+
+/* Base Alert Style */
+.alert {
+    position: relative;
+    display: block;
+    padding: 1em 1.8em;
+    font-size: 0.9em;
+    font-weight: 300;
+    line-height: 1.2;
+    text-align: left;
+    margin-top: 0.4em;
+    margin-bottom: 0.4em;
+    background: transparent;
+    color: white;
+}
+
+/* Error */
+.alert-error {
+    background: #e74c3c;
+    border: 1px solid #c0392b;
+}
+
+/* Success */
+.alert-success {
+    background: #2ecc71;
+    border: 1px solid #27ae60;
+}
+
+/* Info */
+.alert-info {
+    background: #3498db;
+    border: 1px solid #2980b9;
+}
+
+/* Radius */
+.radius {
+    border-radius: 3px;
+}
