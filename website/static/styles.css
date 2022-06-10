@@ -121,3 +121,21 @@ a:hover {
 .btn-delete:focus {
     box-shadow: 0 0 0 4px #ffcccc;
 }
+
+* {
+    box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}

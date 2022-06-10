@@ -1,0 +1,30 @@
+<!doctype html>
+
+{% for report in report_list %}
+<div>
+    <div class="alert alert-success radius" , style="line-height: 10%">
+        <h3 style="text-align: center;"><span style="color: #ffffff;">Position</span></h3>
+        <ul>
+            <li><span style="color: #ffffff;"><span style="text-decoration: underline;"><em>Longitude :</em></span>
+                    <strong>{{ report.get_longitude() }}</strong></span></li>
+            <li><span style="color: #ffffff;"><span style="text-decoration: underline;"><em>Latitude
+                            :&nbsp;</em></span><strong>{{ report.get_latitude() }}</strong></span></li>
+        </ul>
+        <h3 style="text-align: center;"><span style="color: #ffffff;">Citoyen</span></h3>
+        <ul>
+            <li><span style="color: #ffffff;"><span
+                        style="text-decoration: underline;"><em><span>Pr&eacute;nom</span></em><span> :</span></span>
+                    <strong>{{ report.get_first_name() }}</strong></span></li>
+            <li><span style="color: #ffffff;"><span style="text-decoration: underline;"><em><span>Nom
+                                :</span></em></span>&nbsp;<strong>{{ report.get_last_name() }}</strong></span></li>
+        </ul>
+        <h3 style="text-align: center;"><span style="color: #ffffff;">Informations</span></h3>
+        <ul>
+            <li><span style="color: #ffffff;"><span style="text-decoration: underline;"><em>Niveau d'reporte
+                            :</em></span> <strong>{{ report.get_alert_level() }}</strong></span></li>
+            <li><span style="color: #ffffff;"><span style="text-decoration: underline;"><em>Heure :</em></span>
+                    <strong>{{ report.get_time() }}</strong></span></li>
+        </ul>
+    </div>
+</div>
+{% endfor %}

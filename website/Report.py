@@ -1,7 +1,7 @@
 import time
 
 
-class Alert:
+class Report:
     def __init__(self, latitude, longitude, citizen_name):
         self.__id = str(time.time())
         self.__time = time.strftime("%l:%M%p %Z on %b %d, %Y")
