@@ -1,15 +1,15 @@
 <!doctype html>
 
 {% for alert in alert_list %}
-<div class="row">
-    <div class="column">
-        <div class="alert alert-error radius">
-            {{ alert.message }}
-        </div>
-    </div>
-    <div class="column">
+<div>
+    <div class="alert alert-error radius">
+        {{ alert.message }}
         <a href="/delete/{{ alert.id }}">
-            <button>Visit Google</button>
+            <button class="btn btn-delete">
+                <span class="mdi mdi-delete mdi-24px"></span>
+                <span class="mdi mdi-delete-empty mdi-24px"></span>
+                <span>Delete</span>
+            </button>
         </a>
     </div>
 </div>

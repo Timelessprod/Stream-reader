@@ -20,7 +20,7 @@ def index():
 def delete(id):
     global alert_list
     alert_list = list(filter(lambda x: x.id != id, alert_list))
-    return flask.redirect(flask.url_for("index"))
+    return flask.redirect("/", code=302)
 
 
 def update_load():
