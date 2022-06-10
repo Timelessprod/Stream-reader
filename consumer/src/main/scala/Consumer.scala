@@ -1,7 +1,5 @@
-/*
+/**/
 import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecord, ConsumerRecords, KafkaConsumer}
-import io.circe._
-import io.circe.parser._
 import org.apache.logging.log4j.{LogManager, Logger}
 import org.apache.kafka.common.TopicPartition
 
@@ -10,7 +8,7 @@ import scala.collection.JavaConverters._
 import java.util.Properties
 import java.util
 import scala.annotation.tailrec
-import org.json4s.JString
+// import org.json4s.JString
 import org.apache.spark.sql.SparkSession
 
 
@@ -59,4 +57,4 @@ object Consumer {
         receiveReport(this.consumer)
     }
 }
-*/
+/**/

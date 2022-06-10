@@ -1,5 +1,6 @@
 object Main {
     def main(args: Array[String]): Unit = {
-        ConsumerSpark.consumeAndWrite()
+        // ConsumerSpark.consumeAndWrite()
+        Consumer.run()
     }
 }
