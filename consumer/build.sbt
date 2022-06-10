@@ -36,6 +36,14 @@ libraryDependencies += "org.apache.logging.log4j" % "log4j-core" % "2.17.2"
 libraryDependencies += "com.lihaoyi" %% "upickle" % "0.9.5"
 libraryDependencies += "com.lihaoyi" %% "os-lib" % "0.8.0"
 
+val circeVersion = "0.14.1"
+
+libraryDependencies ++= Seq(
+  "io.circe" %% "circe-core",
+  "io.circe" %% "circe-generic",
+  "io.circe" %% "circe-parser"
+).map(_ % circeVersion)
+
 // Here, `libraryDependencies` is a set of dependencies, and by using `+=`,
 // we're adding the scala-parser-combinators dependency to the set of dependencies
 // that sbt will go and fetch when it starts up.

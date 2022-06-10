@@ -45,14 +45,16 @@ object Consumer {
     }
 
 =======*/
-import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecord, ConsumerRecords, KafkaConsumer}
-import org.apache.kafka.common.serialization.StringDeserializer
+import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecords, KafkaConsumer}
+import io.circe._
+import io.circe.parser._
 import org.apache.logging.log4j.{LogManager, Logger}
 
 import java.time.Duration
 import scala.collection.JavaConverters._
 import java.util.Properties
 import java.util
+import scala.annotation.tailrec
 
 
 object Consumer {
@@ -68,16 +70,30 @@ object Consumer {
     val consumer: KafkaConsumer[String, String] = new KafkaConsumer[String, String](props)
     consumer.subscribe(util.Collections.singletonList(topic))
 
-    val content: Map[String, String] = Map()
+    // val content: Map[String, String] = Map()
+    //
+    // val records: ConsumerRecords[String, String] = consumer.poll(Duration.ofMillis(10000))
+    // records.asScala.foreach(record => {
+    //     content + (record.key() -> record.value())
+    //     println(s"Offset: ${record.offset()} Key: ${record.key()} Value: ${record.value()}")
+    // })
+    // logger.info("test")
 
-    val records: ConsumerRecords[String, String] = consumer.poll(Duration.ofMillis(100))
-    records.asScala.foreach(record => {
-        content + (record.key() -> record.value())
-        logger.info(s"Offset: ${record.offset()} Key: ${record.key()} Value: ${record.value()}")
-    })
-    logger.info("test")
+    @tailrec
+    def receiveReport(consumer: KafkaConsumer[String, String]): Unit = {
+        val records: ConsumerRecords[String, String] = consumer.poll(Duration.ofMillis(100))
+
+        records.asScala.foreach(record => {
+            println(s"offset = ${record.offset()}, key = ${record.key()}, value = ${record.value()}")
+        })
+        logger.info(s"${records.count()} report(s) received")
+
+        receiveReport(consumer)
+    }
+
 
     def run(): Unit = {
+        receiveReport(consumer)
         consumer.commitSync()
     }
 }
