@@ -2,8 +2,8 @@ import time
 
 
 class Alert:
-    def __init__(self, latitude, longitude, citizen_name):
-        self.__id = str(time.time())
+    def __init__(self, id, latitude, longitude, citizen_name):
+        self.__id = id
         self.__time = time.strftime("%l:%M%p %Z on %b %d, %Y")
         self.__latitude = latitude
         self.__longitude = longitude

@@ -36,8 +36,10 @@ def update_load():
     with app.app_context():
         while True:
             time.sleep(UPDATE_TIME)
-            alert_list.append(Alert(0, 0, "Nom du citoyen!"))
-            report_list.append(Report(0, 0, "Nom du citoyen!"))
+            alert_list.append(Alert(str(time.time()), 0, 0, "Nom du citoyen!"))
+            report_list.append(
+                Report({"test": 1, "bebe": "truc", "poulpe": [1, 2, "pouce"]})
+            )
             turbo.push(
                 turbo.update(flask.render_template("alert_list.html"), "alert_list_div")
             )
