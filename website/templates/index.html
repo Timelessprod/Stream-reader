@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    {{ turbo() }}
+</head>
+
+<body>
+    <h1>Welcome to PeaceLandWatcher Ultimate Premium Imperator Interface (PUPII)</h1>
+    <div class="row">
+        <div class="column">
+            <h2>Liste des alertes non traitées</h2>
+            <div id="alert_list_div" class="alert_list_class">
+                {% include "alert_list.html" %}
+            </div>
+        </div>
+        <div class="column">
+            <h2>Derniers rapports</h2>
+            <div id="report_list_div" class="report_list_class">
+                {% include "report_list.html" %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

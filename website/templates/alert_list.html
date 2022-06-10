@@ -1,0 +1,37 @@
+<!doctype html>
+
+{% for alert in alert_list %}
+<div>
+    <div class="alert alert-error radius">
+        <h3 style="text-align: center;"><span style="color: #ffffff;">Position</span></h3>
+        <ul>
+            <li><span style="color: #ffffff;"><span style="text-decoration: underline;"><em>Longitude :</em></span>
+                    <strong>{{ alert.get_longitude() }}</strong></span></li>
+            <li><span style="color: #ffffff;"><span style="text-decoration: underline;"><em>Latitude
+                            :&nbsp;</em></span><strong>{{ alert.get_latitude() }}</strong></span></li>
+        </ul>
+        <h3 style="text-align: center;"><span style="color: #ffffff;">Citoyen</span></h3>
+        <ul>
+            <li><span style="color: #ffffff;"><span
+                        style="text-decoration: underline;"><em><span>Pr&eacute;nom</span></em><span> :</span></span>
+                    <strong>{{ alert.get_first_name() }}</strong></span></li>
+            <li><span style="color: #ffffff;"><span style="text-decoration: underline;"><em><span>Nom
+                                :</span></em></span>&nbsp;<strong>{{ alert.get_last_name() }}</strong></span></li>
+        </ul>
+        <h3 style="text-align: center;"><span style="color: #ffffff;">Informations</span></h3>
+        <ul>
+            <li><span style="color: #ffffff;"><span style="text-decoration: underline;"><em>Niveau d'alerte
+                            :</em></span> <strong>{{ alert.get_alert_level() }}</strong></span></li>
+            <li><span style="color: #ffffff;"><span style="text-decoration: underline;"><em>Heure :</em></span>
+                    <strong>{{ alert.get_time() }}</strong></span></li>
+        </ul>
+        <a href="/delete/{{ alert.get_id() }}">
+            <button class="btn btn-delete">
+                <span class="mdi mdi-delete mdi-24px"></span>
+                <span class="mdi mdi-delete-empty mdi-24px"></span>
+                <span>Delete</span>
+            </button>
+        </a>
+    </div>
+</div>
+{% endfor %}

@@ -1,0 +1,141 @@
+@import url(https://fonts.googleapis.com/css?family=Lato);
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    max-width: 900px;
+    margin: 1em auto 2em;
+    font-family: Lato, Arial;
+}
+
+.wrap {
+    padding-left: 1.4em;
+    padding-right: 1.4em;
+}
+
+h1 {
+    text-align: center;
+    border: 2px solid #ddd;
+    padding: 1em;
+    margin-bottom: 1em;
+
+}
+
+h2 {
+    border-bottom: 1px solid #ddd;
+}
+
+a {
+    text-decoration: none;
+    color: #2ecc71;
+}
+
+a:hover {
+    color: #27ae60;
+}
+
+
+/* Alert Box CSS */
+
+/* Base Alert Style */
+.alert {
+    position: relative;
+    display: block;
+    padding: 1em 1.8em;
+    font-size: 0.9em;
+    font-weight: 300;
+    line-height: 1.2;
+    text-align: left;
+    margin-top: 0.4em;
+    margin-bottom: 0.4em;
+    background: transparent;
+    color: white;
+}
+
+/* Error */
+.alert-error {
+    background: #e74c3c;
+    border: 1px solid #c0392b;
+}
+
+/* Success */
+.alert-success {
+    background: #2ecc71;
+    border: 1px solid #27ae60;
+}
+
+/* Info */
+.alert-info {
+    background: #3498db;
+    border: 1px solid #2980b9;
+}
+
+/* Radius */
+.radius {
+    border-radius: 3px;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: 1px solid #bdbdbd;
+    height: 48px;
+    padding: 0 24px 0 16px;
+    letter-spacing: 0.25px;
+    border-radius: 24px;
+    cursor: pointer;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+.btn .mdi {
+    margin-right: 8px;
+}
+
+.btn-delete {
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+}
+
+.btn-delete>.mdi-delete-empty {
+    display: none;
+}
+
+.btn-delete:hover {
+    background-color: #fff5f5;
+}
+
+.btn-delete:hover>.mdi-delete-empty {
+    display: block;
+}
+
+.btn-delete:hover>.mdi-delete {
+    display: none;
+}
+
+.btn-delete:focus {
+    box-shadow: 0 0 0 4px #ffcccc;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
