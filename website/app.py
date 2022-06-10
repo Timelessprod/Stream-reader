@@ -8,7 +8,7 @@ from Alert import Alert
 app = flask.Flask(__name__)
 turbo = turbo_flask.Turbo(app)
 
-alert_list = [Alert(message="A supprimer!")]
+alert_list = []
 
 
 @app.route("/")
@@ -20,13 +20,15 @@ def index():
 def delete(id):
     global alert_list
     alert_list = list(filter(lambda x: x.id != id, alert_list))
-    return flask.redirect("/", code=302)
+    return flask.redirect(flask.url_for("index"))
 
 
 def update_load():
+    global alert_list
     with app.app_context():
         while True:
-            time.sleep(4)
+            time.sleep(5)
+            alert_list.append(Alert("This is a test alert"))
             turbo.push(
                 turbo.update(flask.render_template("alert_list.html"), "alert_list_div")
             )
@@ -34,8 +36,6 @@ def update_load():
 
 @app.context_processor
 def update_alert():
-    alert_list.append(Alert(message="Test Alerte"))
-    print(len(alert_list))
     return {"alert_list": alert_list}
 
 
