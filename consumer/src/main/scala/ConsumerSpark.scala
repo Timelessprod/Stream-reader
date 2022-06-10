@@ -53,12 +53,11 @@ object ConsumerSpark {
              .load()
              .select(from_json($"value".cast("string"), schema).as("data"))
              .select("data.*")
-             .writeStream
-              .format("parquet")
-              .option("checkpointLocation", "hdfs://localhost:9000/checkpoint")
-              .option("path", "hdfs://localhost:9000/drone-reports")
-              .start()
-              .awaitTermination()
+             .writeStream.format("parquet")
+             .option("checkpointLocation", "hdfs://localhost:9000/checkpoint")
+             .option("path", "hdfs://localhost:9000/drone-reports")
+             .start()
+             .awaitTermination()
         println("Done consuming and writing")
     }
 }
