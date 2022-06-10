@@ -8,6 +8,7 @@ authors = ["lopilo24 <henri.jamet@epita.fr>"]
 python = "3.9.7"
 Flask = "^2.1.2"
 kafka-python = "^2.0.2"
+Turbo-Flask = "^0.8.0"
 
 [tool.poetry.dev-dependencies]
 
