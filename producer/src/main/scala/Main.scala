@@ -1,5 +1,8 @@
 object Main {
     def main(args: Array[String]): Unit = {
-        Producer.run(args(0))
+        if (args.length > 0)
+            Producer.run(args(0))
+        else
+            Producer.run("../json/s1.json")
     }
 }

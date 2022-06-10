@@ -45,7 +45,7 @@ object ConsumerSpark {
 
     def consumeAndWrite(): Unit = {
         println("Start consuming and writing")
-        spark.readStream
+        val df = spark.readStream
              .format("kafka")
              .option("kafka.bootstrap.servers", bootstrapServer)
              .option("subscribe", topic)
@@ -54,11 +54,11 @@ object ConsumerSpark {
              .select(from_json($"value".cast("string"), schema).as("data"))
              .select("data.*")
              .writeStream
-             .format("parquet")
-             .option("checkpointLocation", "hdfs://localhost:8080/checkpoint")
-             .option("path", "hdfs://localhost:8080/drone-reports")
-             .start()
-             .awaitTermination()
+              .format("parquet")
+              .option("checkpointLocation", "hdfs://localhost:9000/checkpoint")
+              .option("path", "hdfs://localhost:9000/drone-reports")
+              .start()
+              .awaitTermination()
         println("Done consuming and writing")
     }
 }
