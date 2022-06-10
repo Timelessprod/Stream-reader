@@ -59,12 +59,7 @@ object Producer {
         sendReports(droneReports)
 
 
-        // println("test is testing")
         // val test = readJson("../test.json")
-        // println(test.getClass.getName)
-        // println(test(0).getClass.getName)
-        // println(test(0).toString)
-        // sendReports(test)/**/
-        // println("I did it ?!")
+        // sendReports(test)
     }
 }

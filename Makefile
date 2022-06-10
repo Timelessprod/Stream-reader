@@ -2,7 +2,7 @@
 
 TOPIC="drone-report"
 
-run: start_kafka producer consumer
+run: start_kafka consumer producer
 
 # danger ca crée maybe des zombies donc a pas trop lancer sinon reboot PC
 start_kafka:
