@@ -13,16 +13,15 @@ object Producer {
 
     val props = new Properties()
 
-    props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")    // il faudra plusieurs broker
+    props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")    // need various brokers
     props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer")
-    // props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "SerdeDrone")
     props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer")
 
-    // récupère le json sous forme d'array de map des droneReports
-    // utilisation:
+    // get up the Json and convert it in array of map of the droneReports
+    // use:
     //     data : ArrayBuffer[ujson.Value]
     //     data(0) : ujson.Value
-    //     data(0)("reportId") : Int (attribut reportId du premier report)
+    //     data(0)("reportId") : Int (attribut reportId of the 1st report)
     def readJson(filename: String): ArrayBuffer[Value] = {
         val jsonString = Source.fromFile(filename)
         val data = ujson.read(jsonString.getLines().mkString)
@@ -30,7 +29,7 @@ object Producer {
         data("reports").arr
     }
 
-    // envoie UN report dans la stream
+    // send ONE report into the stream
     def sendReport(droneReport: ujson.Value, producer: KafkaProducer[String, String]) = {
         val record = new ProducerRecord[String, String]("drone-report", droneReport("reportId").toString, droneReport.toString)
         producer.send(record, (metadata: RecordMetadata, exception: Exception) => {
@@ -42,7 +41,7 @@ object Producer {
         })
     }
 
-    // envoie tous les reports dans l'array dans la stream
+    // send all reports from the array into the stream
     def sendReports(droneReports: ArrayBuffer[ujson.Value]) = {
         val producer = new KafkaProducer[String, String](this.props)
 
@@ -53,18 +52,17 @@ object Producer {
         logger.info("Producer closed")
     }
     
-    def run(): Unit = {
-        // je sais pas comment ils sont rangés et créer là donc faudra vérifier
-        val droneReports = readJson("../json/s1.json")
+    def run(jsonpath: String): Unit = {
+        if (jsonpath.isEmpty) {
+            val droneReports = readJson("../json/s1.json")
+        }
+        else {
+            val droneReports = readJson(jsonpath)
+        }
         sendReports(droneReports)
 
 
-        // println("test is testing")
         // val test = readJson("../test.json")
-        // println(test.getClass.getName)
-        // println(test(0).getClass.getName)
-        // println(test(0).toString)
-        // sendReports(test)/**/
-        // println("I did it ?!")
+        // sendReports(test)
     }
 }

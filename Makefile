@@ -2,7 +2,7 @@
 
 TOPIC="drone-report"
 
-run: start_kafka producer consumer
+run: start_kafka consumer producer
 
 # danger ca crée maybe des zombies donc a pas trop lancer sinon reboot PC
 start_kafka:
@@ -13,7 +13,7 @@ create_topic:
 	kafka-topics.sh --create --topic $(TOPIC) --bootstrap-server localhost:9092
 
 producer:
-	cd producer && sbt run
+	cd producer && sbt "run ../json/s1.json"
 
 consumer:
 	cd consumer && sbt run
