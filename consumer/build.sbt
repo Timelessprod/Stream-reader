@@ -33,17 +33,23 @@ libraryDependencies += "org.apache.kafka" % "kafka-streams" % "2.1.0"
 libraryDependencies += "org.apache.spark" %% "spark-streaming-kafka-0-10" % "3.2.1"
 libraryDependencies += "org.apache.spark" % "spark-streaming_2.13" % "3.2.1"
 libraryDependencies += "org.apache.spark" %% "spark-sql" % "3.2.1"
-// libraryDependencies += "org.apache.spark" %% "spark-sql-kafka-0-10_2.11" % "2.0.2"
+// https://mvnrepository.com/artifact/org.apache.spark/spark-sql-kafka-0-10
+libraryDependencies += "org.apache.spark" %% "spark-sql-kafka-0-10" % "3.2.1"
 libraryDependencies += "org.apache.logging.log4j" % "log4j-core" % "2.17.2"
-// libraryDependencies += "org.json4s" % "json4s-native-0-10_2.11" % "3.2.10"
+// libraryDependencies += "org.json4s" % "json4s-native_2.13" % "4.0.5"
+// https://mvnrepository.com/artifact/org.json4s/json4s-jackson
+// libraryDependencies += "org.json4s" %% "json4s-jackson" % "4.0.5"
 // libraryDependencies += "com.lihaoyi" %% "upickle" % "0.9.5"
 // libraryDependencies += "com.lihaoyi" %% "os-lib" % "0.8.0"
+// https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-client
+libraryDependencies += "org.apache.hadoop" % "hadoop-client" % "3.3.1"
+libraryDependencies += "org.apache.hadoop" % "hadoop-common" % "3.3.1"
 
-val circeVersion = "0.14.1"
-
-libraryDependencies += "io.circe" %% "circe-core" % circeVersion
-libraryDependencies += "io.circe" %% "circe-generic" % circeVersion
-libraryDependencies += "io.circe" %% "circe-parser" % circeVersion
+// val circeVersion = "0.14.1"
+//
+// libraryDependencies += "io.circe" %% "circe-core" % circeVersion
+// libraryDependencies += "io.circe" %% "circe-generic" % circeVersion
+// libraryDependencies += "io.circe" %% "circe-parser" % circeVersion
 
 // Here, `libraryDependencies` is a set of dependencies, and by using `+=`,
 // we're adding the scala-parser-combinators dependency to the set of dependencies

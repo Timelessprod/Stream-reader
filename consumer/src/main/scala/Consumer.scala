@@ -1,3 +1,4 @@
+/*
 import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecord, ConsumerRecords, KafkaConsumer}
 import io.circe._
 import io.circe.parser._
@@ -58,3 +59,4 @@ object Consumer {
         receiveReport(this.consumer)
     }
 }
+*/
