@@ -18,8 +18,8 @@ object Consumer {
     lazy val logger: Logger = LogManager.getLogger(this.getClass)
 
     // spark
-    // val spark = SparkSession.builder().appName("Consumer").getOrCreate()
-    // import spark.implicits._
+    val spark = SparkSession.builder().appName("Consumer").getOrCreate()
+    import spark.implicits._
 
     // config for the consumer
     val props: Properties = new Properties()
@@ -45,8 +45,8 @@ object Consumer {
             println(recordString)
             val recordJson = JString(recordString)
             println(recordJson)
-            // val df = spark.read.json(Seq(recordString).toDS)
-            // println(df)
+            val df = spark.read.json(Seq(recordString).toDS)
+            println(df)
         })
         logger.info(s"${records.count()} report(s) received")
 

@@ -53,16 +53,11 @@ object Producer {
     }
     
     def run(jsonpath: String): Unit = {
-        if (jsonpath.isEmpty) {
-            val droneReports = readJson("../json/s1.json")
-        }
-        else {
-            val droneReports = readJson(jsonpath)
-        }
-        sendReports(droneReports)
+        val droneReports = readJson(jsonpath)
+        // sendReports(droneReports)
 
 
-        // val test = readJson("../test.json")
-        // sendReports(test)
+        val test = readJson("../test.json")
+        sendReports(test)
     }
 }
