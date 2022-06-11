@@ -26,12 +26,12 @@ object ConsumerSpark {
 
   def consumeAndWrite(): Unit = {
     println("Start consuming and writing")
-    spark.read//Stream
+    spark.readStream
       .format("kafka")
       .option("kafka.bootstrap.servers", bootstrapServer)
       .option("subscribe", topic)
       .option("startingOffsets", "earliest")
-      .option("endingOffsets", "latest")
+      //.option("endingOffsets", "latest")
       .load()
       //.show()
       //.write.format("csv")
@@ -48,11 +48,11 @@ object ConsumerSpark {
         $"heardWords", explode($"peaceScores"))
       .withColumnRenamed("key", "citizenId")
       .withColumnRenamed("value", "peaceScore")
-      .write.format("csv")
+      .writeStream.format("csv")
       .option("checkpointLocation", "hdfs://localhost:9000/checkpoint")
       .option("path", "hdfs://localhost:9000/drone-reports")
-      //.start()
-      //.awaitTermination()
+      .start()
+      .awaitTermination()
     println("Done consuming and writing")
   }
 }
