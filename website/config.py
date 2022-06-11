@@ -3,6 +3,7 @@ parameters = {
     "kafka_port": 9092,  # Port for the kafka stream
     "kafka_adress": "localhost",  # Adress for the kafka stream
     "report_number": 10,  # Number of reports to display
+    "alert_threshold": 50,
 }
 
 # List of very bad words

@@ -15,6 +15,7 @@ from Report import Report
 # ---------------------------------------------------------------------------- #
 KAFKA_ADDRESS = parameters["kafka_adress"]
 KAFKA_PORT = parameters["kafka_port"]
+ALERT_THRESHOLD = parameters["alert_threshold"]
 
 # ---------------------------------------------------------------------------- #
 #                             KAFKA INITIALISATION                             #
@@ -35,19 +36,23 @@ while consumer is None:
 # ---------------------------------------------------------------------------- #
 def get_alert_and_report():
     global consumer
+    alert_list = []
+
     try:
         msg = json.loads(next(consumer).value)
 
         for report in msg["peaceScores"]:
-            if report["score"] > 50:
-                return Alert(
-                    msg["reportId"],
-                    msg["latitude"],
-                    msg["longitude"],
-                    report["citizenId"],
-                    str(report["score"]) + "%",
+            if report["score"] > ALERT_THRESHOLD:
+                alert_list.append(
+                    Alert(
+                        msg["reportId"],
+                        msg["latitude"],
+                        msg["longitude"],
+                        report["citizenId"],
+                        str(report["score"]) + "%",
+                    )
                 )
-        return Report(msg)
+        return alert_list, Report(msg)
     except:
         logging.warning("Could not connect to Kafka")
 

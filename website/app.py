@@ -44,11 +44,9 @@ def update_load():
             # )
             res = kafka_consumer.get_alert_and_report()
             if res is not None:
-                if type(res) is Alert:
-                    alert_list.append(res)
-                else:
-                    report_list.append(res)
-            report_list = report_list[:-REPORT_NUMBER]
+                alert_list.extend(res[0])
+                report_list.append(res[1])
+            report_list = report_list[-REPORT_NUMBER:]
             turbo.push(
                 turbo.update(flask.render_template("alert_list.html"), "alert_list_div")
             )
