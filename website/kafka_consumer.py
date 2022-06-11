@@ -62,15 +62,16 @@ def get_report():
     try:
         msg = json.loads(next(report_consumer).value)
 
-        for report in msg["peaceScores"]:
-            if report["score"] > ALERT_THRESHOLD:
+        report = msg["peaceScores"]
+        for key in msg["peaceScores"]:
+            if report[key] > ALERT_THRESHOLD:
                 alert_list.append(
                     Alert(
                         msg["reportId"],
                         msg["latitude"],
                         msg["longitude"],
-                        report["citizenId"],
-                        str(report["score"]) + "%",
+                        key,
+                        str(report[key]) + "%",
                     )
                 )
         for alert in alert_list:
