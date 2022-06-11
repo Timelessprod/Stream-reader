@@ -1,7 +1,7 @@
 
 // The simplest possible sbt build file is just one line:
 
-scalaVersion := "2.13.8"
+scalaVersion := "2.11.12"
 // That is, to create a valid sbt build, all you've got to do is define the
 // version of Scala you'd like your project to use.
 
@@ -25,7 +25,22 @@ version := "1.0"
 // Want to use a published library in your project?
 // You can define other libraries as dependencies in your build like this:
 
-libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.1"
+libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.2"
+// libraryDependencies += "co.theasi" % "plotly_2.11" % "0.2.0"
+libraryDependencies += "org.vegas-viz" % "vegas_2.11" % "0.3.11"
+
+
+libraryDependencies ++= {
+// Determine OS version of JavaFX binaries
+val osName = System.getProperty("os.name") match {
+    case n if n.startsWith("Linux")   => "linux"
+    case n if n.startsWith("Mac")     => "mac"
+    case n if n.startsWith("Windows") => "win"
+    case _                            => throw new Exception("Unknown platform!")
+}
+Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
+    .map(m => "org.openjfx" % s"javafx-$m" % "15.0.1" classifier osName)
+}
 
 // Here, `libraryDependencies` is a set of dependencies, and by using `+=`,
 // we're adding the scala-parser-combinators dependency to the set of dependencies
