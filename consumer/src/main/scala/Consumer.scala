@@ -1,60 +1,56 @@
-/**/
-import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecord, ConsumerRecords, KafkaConsumer}
-import org.apache.logging.log4j.{LogManager, Logger}
-import org.apache.kafka.common.TopicPartition
-
-import java.time.Duration
-import scala.collection.JavaConverters._
-import java.util.Properties
-import java.util
-import scala.annotation.tailrec
-// import org.json4s.JString
-import org.apache.spark.sql.SparkSession
-
+import org.apache.spark.sql.functions.{explode, from_json, schema_of_json}
+import org.apache.spark.sql.types.{ArrayType, DoubleType, IntegerType, MapType, StringType, StructField, StructType}
+import org.apache.spark.sql.{Encoders, SparkSession, types}
 
 object Consumer {
-    // logger
-    lazy val logger: Logger = LogManager.getLogger(this.getClass)
+  val topic = "drone-report"
 
-    // spark
-    val spark = SparkSession.builder().appName("Consumer").config("spark.master", "local[*]").getOrCreate()
-    import spark.implicits._
+  val topics: Array[String] = Array(this.topic)
 
-    // config for the consumer
-    val props: Properties = new Properties()
-    props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")
-    props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer")
-    props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer")
-    props.put(ConsumerConfig.GROUP_ID_CONFIG, "consumer_group")
-    
-    val topic = "drone-report"
-    val consumer: KafkaConsumer[String, String] = new KafkaConsumer[String, String](props)
-    consumer.subscribe(util.Collections.singletonList(topic))
+  val bootstrapServer: String = "localhost:9092"
+  val spark: SparkSession = SparkSession.builder().appName("KafkaConsumerSpark").master("local[*]").getOrCreate()
 
-    // val content: Map[String, String] = Map()
+  import spark.implicits._
 
-    // infinite loop to get reports from the stream
-    @tailrec
-    def receiveReport(consumer: KafkaConsumer[String, String]): Unit = {
-        val records: ConsumerRecords[String, String] = consumer.poll(Duration.ofMillis(100))
+  val schema2: StructType = StructType(Array(
+    StructField("reportId", IntegerType, nullable = false),
+    StructField("peaceWatcherId", IntegerType, nullable = false),
+    StructField("time", StringType, nullable = false),
+    StructField("latitude", DoubleType, nullable = false),
+    StructField("longitude", DoubleType, nullable = false),
+    StructField("heardWords", ArrayType(StringType, containsNull = false), nullable = false),
+    StructField("peaceScores", MapType(StringType, StringType, valueContainsNull = true), nullable = true)
+  ))
 
-        records.asScala.foreach(record => {
-            println(s"offset = ${record.offset()}, key = ${record.key()}, value = ${record.value()}")
-            val recordString = record.value().toString
-            // println(recordString)
-            val df = spark.read.json(Seq(recordString).toDS)
-            // println(df)
-        })
-        logger.info(s"${records.count()} report(s) received")
-
-        consumer.commitSync()
-
-        receiveReport(consumer)
-    }
-
-    def run(): Unit = {
-        logger.info("Runnig Consumer")
-        receiveReport(this.consumer)
-    }
+  def consumeAndWrite(): Unit = {
+    println("Start consuming and writing")
+    spark.readStream
+      .format("kafka")
+      .option("kafka.bootstrap.servers", bootstrapServer)
+      .option("subscribe", topic)
+      .option("startingOffsets", "earliest")
+      //.option("endingOffsets", "latest")
+      .load()
+      //.show()
+      //.write.format("csv")
+      //.write.format("com.databricks.spark.csv")
+      //.save("hdfs://localhost:9000/drone-reports_test")
+      //.option("checkpointLocation", "hdfs://localhost:9000/checkpoint")
+      //.option("path", "hdfs://localhost:9000/drone-reports")
+      .select(from_json($"value".cast("string"), schema2).as("data"))
+      .select("data.*")
+      //.show()
+      .select($"reportId", $"peaceWatcherId", $"time", $"longitude", $"latitude",
+              explode($"heardWords").as("heardWords"), $"peaceScores")
+      .select($"reportId", $"peaceWatcherId", $"time", $"longitude", $"latitude",
+        $"heardWords", explode($"peaceScores"))
+      .withColumnRenamed("key", "citizenId")
+      .withColumnRenamed("value", "peaceScore")
+      .writeStream.format("csv")
+      .option("checkpointLocation", "hdfs://localhost:9000/checkpoint")
+      .option("path", "hdfs://localhost:9000/drone-reports")
+      .start()
+      .awaitTermination()
+    println("Done consuming and writing")
+  }
 }
-/**/
