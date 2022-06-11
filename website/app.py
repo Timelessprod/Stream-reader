@@ -33,28 +33,50 @@ alert_list = []
 report_list = []
 
 
-def update_load():
-    global alert_list, report_list
+# ---------------------------------------------------------------------------- #
+#                              DYNAMIC WEB UPDATE                              #
+# ---------------------------------------------------------------------------- #
+def update_reports():
+    global report_list
     with app.app_context():
         while True:
             time.sleep(UPDATE_TIME)
-            # alert_list.append(Alert(str(time.time()), 0, 0, "Nom du citoyen!"))
-            # report_list.append(
-            #     Report({"test": 1, "bebe": "truc", "poulpe": [1, 2, "pouce"]})
-            # )
-            res = kafka_consumer.get_alert_and_report()
-            if res is not None:
-                alert_list.extend(res[0])
-                report_list.append(res[1])
+            report = kafka_consumer.get_report()
+            if report is not None:
+                report_list.append(report)
             report_list = report_list[-REPORT_NUMBER:]
-            turbo.push(
-                turbo.update(flask.render_template("alert_list.html"), "alert_list_div")
-            )
-            turbo.push(
-                turbo.update(
-                    flask.render_template("report_list.html"), "report_list_div"
-                )
-            )
+
+            while True:
+                try:
+                    turbo.push(
+                        turbo.update(
+                            flask.render_template("report_list.html"), "report_list_div"
+                        )
+                    )
+                    break
+                except:
+                    continue
+
+
+def update_alerts():
+    global alert_list
+    with app.app_context():
+        while True:
+            time.sleep(UPDATE_TIME)
+            alert = kafka_consumer.get_alert()
+            if alert is not None:
+                alert_list.append(alert)
+
+            while True:
+                try:
+                    turbo.push(
+                        turbo.update(
+                            flask.render_template("alert_list.html"), "alert_list_div"
+                        )
+                    )
+                    break
+                except:
+                    continue
 
 
 # ---------------------------------------------------------------------------- #
@@ -79,4 +101,5 @@ def update_dynamic():
 
 @app.before_first_request
 def before_first_request():
-    threading.Thread(target=update_load).start()
+    threading.Thread(target=update_reports).start()
+    threading.Thread(target=update_alerts).start()
