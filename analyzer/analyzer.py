@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 import calendar
 import pyspark.sql.functions as F
+import pandas as pd
 
 def rename_columns(df, columns):
     if isinstance(columns, dict):
@@ -27,7 +28,7 @@ def graph_location(df):
     fig.show()
 
 def get_hour(df):
-    df = datetime.strptime(df.timestamp.astype(str), "%Y-%m-%d %H:%M:%S").hour
+    df = pd.datetime(df.timestamp.astype(str), format = "%Y-%m-%d %H:%M:%S").hour
     heights = [0 for i in range(25)]
     for elem in df:
         heights[elem.tointeger] += 1
