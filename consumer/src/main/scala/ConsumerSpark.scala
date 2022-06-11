@@ -1,63 +1,58 @@
-import org.apache.kafka.common.TopicPartition
-import org.apache.spark.streaming.kafka010.ConsumerStrategies.Subscribe
-import org.apache.spark.streaming.kafka010.KafkaUtils
-import org.apache.spark.streaming.kafka010.LocationStrategies.PreferConsistent
-import org.apache.spark._
-import org.apache.spark.streaming._
-import org.apache.spark.streaming.dstream.DStream
-import org.apache.kafka.common.serialization.StringDeserializer
-import org.apache.spark.sql.{DataFrame, Encoders, SparkSession}
-import org.apache.spark.sql.functions.from_json
-import org.apache.spark.sql.types.StructType
+import org.apache.spark.sql.functions.{explode, from_json, schema_of_json}
+import org.apache.spark.sql.types.{ArrayType, DoubleType, IntegerType, MapType, StringType, StructField, StructType}
+import org.apache.spark.sql.{Encoders, SparkSession, types}
 
 object ConsumerSpark {
-    // val sparkConf: SparkConf = new SparkConf().setAppName("KafkaConsumerSpark").setMaster("local[*]")
+  val topic = "drone-report"
 
-    // val streamingContext = new StreamingContext(sparkConf, Seconds(1))
+  val topics: Array[String] = Array(this.topic)
 
-    val topic = "drone-report"
+  val bootstrapServer: String = "localhost:9092"
+  val spark: SparkSession = SparkSession.builder().appName("KafkaConsumerSpark").master("local[*]").getOrCreate()
 
-    val topics: Array[String] = Array(this.topic)
+  import spark.implicits._
 
-    // val kafkaParams: Map[String, Object] = Map[String, Object](
-    //     "bootstrap.servers" -> "localhost:9092",
-    //     "key.deserializer" -> classOf[StringDeserializer],
-    //     "value.deserializer" -> classOf[StringDeserializer],
-    //     "group.id" -> "use_a_separate_group_id_for_each_stream",
-    //     "auto.offset.reset" -> "latest",
-    //     "enable.auto.commit" -> (false: java.lang.Boolean)
-    // )
-    //
-    // val stream: DStream[String] = KafkaUtils.createDirectStream[String, String](
-    //     streamingContext,
-    //     PreferConsistent,
-    //     Subscribe[String, String](topics, kafkaParams)
-    // ).map(record => record.value)
+  val schema: StructType = Encoders.product[DroneReport].schema
 
-    // 2nd method
+  val schema2: StructType = StructType(Array(
+    StructField("reportId", IntegerType, nullable = false),
+    StructField("peaceWatcherId", IntegerType, nullable = false),
+    StructField("time", StringType, nullable = false),
+    StructField("latitude", DoubleType, nullable = false),
+    StructField("longitude", DoubleType, nullable = false),
+    StructField("heardWords", ArrayType(StringType, containsNull = false), nullable = false),
+    StructField("peaceScores", MapType(StringType, StringType, valueContainsNull = true), nullable = true)
+  ))
 
-    val bootstrapServer: String = "localhost:9092"
-    val spark: SparkSession = SparkSession.builder().appName("KafkaConsumerSpark").master("local[*]").getOrCreate()
-
-    import spark.implicits._
-
-    val schema: StructType = Encoders.product[DroneReport].schema
-
-    def consumeAndWrite(): Unit = {
-        println("Start consuming and writing")
-        val df = spark.readStream
-             .format("kafka")
-             .option("kafka.bootstrap.servers", bootstrapServer)
-             .option("subscribe", topic)
-             .option("startingOffsets", "earliest")
-             .load()
-             .select(from_json($"value".cast("string"), schema).as("data"))
-             .select("data.*")
-             .writeStream.format("parquet")
-             .option("checkpointLocation", "hdfs://localhost:9000/checkpoint")
-             .option("path", "hdfs://localhost:9000/drone-reports")
-             .start()
-             .awaitTermination()
-        println("Done consuming and writing")
-    }
+  def consumeAndWrite(): Unit = {
+    println("Start consuming and writing")
+    spark.read//Stream
+      .format("kafka")
+      .option("kafka.bootstrap.servers", bootstrapServer)
+      .option("subscribe", topic)
+      .option("startingOffsets", "earliest")
+      .option("endingOffsets", "latest")
+      .load()
+      //.show()
+      //.write.format("csv")
+      //.write.format("com.databricks.spark.csv")
+      //.save("hdfs://localhost:9000/drone-reports_test")
+      //.option("checkpointLocation", "hdfs://localhost:9000/checkpoint")
+      //.option("path", "hdfs://localhost:9000/drone-reports")
+      .select(from_json($"value".cast("string"), schema2).as("data"))
+      .select("data.*")
+      //.show()
+      .select($"reportId", $"peaceWatcherId", $"time", $"longitude", $"latitude",
+              explode($"heardWords").as("heardWords"), $"peaceScores")
+      .select($"reportId", $"peaceWatcherId", $"time", $"longitude", $"latitude",
+        $"heardWords", explode($"peaceScores"))
+      .withColumnRenamed("key", "citizenId")
+      .withColumnRenamed("value", "peaceScore")
+      .write.format("csv")
+      .option("checkpointLocation", "hdfs://localhost:9000/checkpoint")
+      .option("path", "hdfs://localhost:9000/drone-reports")
+      //.start()
+      //.awaitTermination()
+    println("Done consuming and writing")
+  }
 }

@@ -7,7 +7,7 @@ def generate_random_json(n, scenario, scores):
     reports = []
     for _ in range(n):
         words = [random.choice(scenario) for _ in range(random.randint(1, 10))]
-        peaceScores = [{"citizenId": random.randint(1, 1000000), "score": random.randint(scores[0], scores[1])} for _ in range(random.randint(1, 10))]
+        peaceScores = {str(random.randint(1, 1000000)): random.randint(scores[0], scores[1]) for _ in range(random.randint(1, 10))}
         report = {
             "reportId": random.randint(0, 1000000),
             "peaceWatcherId": random.randint(0, 1000000),
