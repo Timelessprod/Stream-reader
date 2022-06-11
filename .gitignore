@@ -40,6 +40,8 @@ bin/
 .history
 .scala_dependencies
 .cache-main
+export/
 
 #general
 *.class
+website/__pycache__
