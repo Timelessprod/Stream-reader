@@ -13,7 +13,7 @@ scalaVersion := "2.11.12"
 
 // It's possible to define many kinds of settings, such as:
 
-name := "hello-world"
+name := "analyzer"
 organization := "ch.epfl.scala"
 version := "1.0"
 
@@ -41,6 +41,8 @@ val osName = System.getProperty("os.name") match {
 Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
     .map(m => "org.openjfx" % s"javafx-$m" % "15.0.1" classifier osName)
 }
+libraryDependencies += "org.apache.spark" %% "spark-core" % "2.4.2"
+libraryDependencies += "org.apache.spark" %% "spark-sql" % "2.4.2"
 
 // Here, `libraryDependencies` is a set of dependencies, and by using `+=`,
 // we're adding the scala-parser-combinators dependency to the set of dependencies
