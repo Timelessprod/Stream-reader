@@ -6,6 +6,7 @@ authors = ["Corentin Duchêne <corentin.duchene@epita.fr>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
+Faker = "^13.13.0"
 
 [tool.poetry.dev-dependencies]
 
