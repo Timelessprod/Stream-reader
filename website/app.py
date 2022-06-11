@@ -42,10 +42,13 @@ def update_load():
             # report_list.append(
             #     Report({"test": 1, "bebe": "truc", "poulpe": [1, 2, "pouce"]})
             # )
-            alert, report = kafka_consumer.get_alert_and_report()
-            alert_list.extend(alert)
-            report_list.extend(report)
-            report_list = report_list[:10]
+            res = kafka_consumer.get_alert_and_report()
+            if res is not None:
+                if type(res) is Alert:
+                    alert_list.append(res)
+                else:
+                    report_list.append(res)
+            report_list = report_list[:-REPORT_NUMBER]
             turbo.push(
                 turbo.update(flask.render_template("alert_list.html"), "alert_list_div")
             )
@@ -64,7 +67,7 @@ def index():
     return flask.render_template("index.html")
 
 
-@app.route("/delete/<id>")
+@app.route("/delete/<int:id>")
 def delete(id):
     global alert_list
     alert_list = list(filter(lambda x: x.get_id() != id, alert_list))

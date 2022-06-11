@@ -2,7 +2,7 @@
 
 {% for report in report_list %}
 <div>
-    <div class="alert alert-success radius" , style="line-height: 50%">
+    <div class="alert alert-success radius">
         <h3 style="text-align: center;"><span style="color: #ffffff;">Position</span></h3>
         {% for key in report.get_report() %}
         <p><strong>{{ key }} :&nbsp;</strong><em>{{ report.get_report()[key] }}</em></p>
