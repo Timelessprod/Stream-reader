@@ -4,6 +4,7 @@
 
 import logging
 from kafka import KafkaConsumer
+from kafka import KafkaProducer
 import json
 
 from config import parameters, bad_words, classical_words, good_words
@@ -21,25 +22,45 @@ ALERT_THRESHOLD = parameters["alert_threshold"]
 #                             KAFKA INITIALISATION                             #
 # ---------------------------------------------------------------------------- #
 
-consumer = None
-while consumer is None:
+report_consumer = None
+while report_consumer is None:
     try:
-        consumer = KafkaConsumer(
+        report_consumer = KafkaConsumer(
             "drone-report",
             bootstrap_servers=["{}:{}".format(KAFKA_ADDRESS, KAFKA_PORT)],
         )
     except:
-        logging.warning("Could not connect to Kafka")
+        logging.warning("Could not connect to Kafka to create report_consumer")
+
+alert_consumer = None
+while alert_consumer is None:
+    try:
+        alert_consumer = KafkaConsumer(
+            "drone-alert",
+            bootstrap_servers=["{}:{}".format(KAFKA_ADDRESS, KAFKA_PORT)],
+        )
+    except:
+        logging.warning("Could not connect to Kafka to create alert consumer")
+
+alert_producer = None
+while alert_producer is None:
+    try:
+        alert_producer = KafkaProducer(
+            bootstrap_servers="{}:{}".format(KAFKA_ADDRESS, KAFKA_PORT),
+            value_serializer=lambda m: json.dumps(m.__dict__).encode("ascii"),
+        )
+    except:
+        logging.warning("Could not connect to Kafka to create alert producer")
 
 # ---------------------------------------------------------------------------- #
 #                                   FUNCTIONS                                  #
 # ---------------------------------------------------------------------------- #
-def get_alert_and_report():
-    global consumer
+def get_report():
+    global report_consumer, alert_producer
     alert_list = []
 
     try:
-        msg = json.loads(next(consumer).value)
+        msg = json.loads(next(report_consumer).value)
 
         for report in msg["peaceScores"]:
             if report["score"] > ALERT_THRESHOLD:
@@ -52,8 +73,30 @@ def get_alert_and_report():
                         str(report["score"]) + "%",
                     )
                 )
-        return alert_list, Report(msg)
+        for alert in alert_list:
+            alert_producer.send("drone-alert", alert)
+
+        return Report(msg)
     except:
-        logging.warning("Could not connect to Kafka")
+        logging.warning("Could not connect to Kafka to get reports")
+
+    return None
+
+
+def get_alert():
+    global alert_consumer
+
+    try:
+        alert = json.loads(next(alert_consumer).value)
+        return Alert(
+            alert["_Alert__id"],
+            alert["_Alert__latitude"],
+            alert["_Alert__longitude"],
+            alert["_Alert__citizen_id"],
+            int(alert["_Alert__alert_level"][:-1]),
+        )
+
+    except:
+        logging.warning("Could not connect to Kafka to get alerts")
 
     return None
