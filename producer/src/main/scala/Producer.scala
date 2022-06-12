@@ -34,13 +34,7 @@ object Producer {
      */
     def sendReport(droneReport: ujson.Value, producer: KafkaProducer[String, String]): util.concurrent.Future[RecordMetadata] = {
         val record = new ProducerRecord[String, String]("drone-report", droneReport("reportId").toString, droneReport.toString)
-        producer.send(record, (metadata: RecordMetadata, exception: Exception) => {
-            if (exception != null) {
-                exception.printStackTrace()
-            } else {
-                logger.info(s"Metadata about the sent record: $metadata")
-            }
-        })
+        producer.send(record)
     }
 
     /**
