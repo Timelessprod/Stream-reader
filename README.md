@@ -18,3 +18,19 @@ Dans cette partie, on propose une implémentation de l'architecture adaptée au 
 | Adrien Merat | `adrien.merat` | `Timelessprod` |
 | Corentin Duchêne| `corentin.duchene` | `Nigiva` |
 | Henri Jamet | `henri.jamet` | `hjamet` |
+
+## Pour lancer le projet
+1. Installer ***Kafka***
+2. Installer ***HDFS***
+3. Installer ***Poetry***
+4. Lancer Kafka : `start_kafka`
+5. Créer les topics dans Kafka : `make create_topic`
+6. Lancer le Producer avec le scénario 1 (citoyens heureux) : `make producer`
+    Pour lancer le Producer avec d'autres scénarios comme 
+    * 2 (citoyens en colère) : `cd producer && sbt "run ../json/s2.json"`
+    * 3 (citoyens stressés) : `cd producer && sbt "run ../json/s3.json"`
+7. Lancer le Consumer (HDFS) : `make consumer`
+8. Lancer le site web de gestion des alertes PUPII (PeaceLandWatcher Ultimate Premium Imperator Interface) :
+   * `cd website/`
+   * `poetry shell` (on utilise Python 3.9.7 via `pyenv`)
+   * `flask run`
