@@ -1,8 +1,10 @@
 import org.apache.spark.sql.functions.{explode, from_json, schema_of_json}
 import org.apache.spark.sql.types.{ArrayType, DoubleType, IntegerType, MapType, StringType, StructField, StructType}
 import org.apache.spark.sql.{Encoders, SparkSession, types}
+import org.apache.logging.log4j.{LogManager, Logger}
 
 object Consumer {
+  lazy val logger: Logger = LogManager.getLogger(getClass.getName)
   // Topic of the kafka stream where drone reports are sent
   val topic = "drone-report"
 
@@ -24,7 +26,7 @@ object Consumer {
   ))
 
   def consumeAndWrite(): Unit = {
-    println("Start consuming and writing")
+    logger.info("Start consuming and writing")
     spark.readStream
       .format("kafka")
       .option("kafka.bootstrap.servers", bootstrapServer)
@@ -45,6 +47,6 @@ object Consumer {
       .option("path", "hdfs://localhost:9000/drone-reports")
       .start()
       .awaitTermination()
-    println("Done consuming and writing")
+    logger.info("Done consuming and writing")
   }
 }
