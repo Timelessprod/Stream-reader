@@ -5,7 +5,8 @@ TOPIC_ALERT="drone-alert"
 
 run: start_kafka create_topic consumer producer
 
-# danger ca crée maybe des zombies donc a pas trop lancer sinon reboot PC
+# danger ca crée maybe des zombies
+# donc a pas trop lancer sinon reboot PC
 start_kafka:
 	zookeeper-server-start.sh config/zookeeper.properties &
 	kafka-server-start.sh config/server.properties &
@@ -20,6 +21,5 @@ producer:
 consumer:
 	cd consumer && sbt run
 
-# mettre un truc pour tuer les zombies ?
 clean:
 	rm -rf /tmp/kafka-logs /tmp/zookeeper
