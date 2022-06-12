@@ -8,6 +8,9 @@ authors = ["Corentin Duchêne <corentin.duchene@epita.fr>"]
 python = "3.8.10"
 pyspark = "^3.2.1"
 matplotlib = "^3.5.2"
+spylon-kernel = "^0.4.1"
+jupyter = "^1.0.0"
+pandas = "^1.4.2"
 
 [tool.poetry.dev-dependencies]
 
