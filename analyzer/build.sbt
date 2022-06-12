@@ -26,21 +26,6 @@ version := "1.0"
 // You can define other libraries as dependencies in your build like this:
 
 libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.2"
-// libraryDependencies += "co.theasi" % "plotly_2.11" % "0.2.0"
-libraryDependencies += "org.vegas-viz" % "vegas_2.11" % "0.3.11"
-
-
-libraryDependencies ++= {
-// Determine OS version of JavaFX binaries
-val osName = System.getProperty("os.name") match {
-    case n if n.startsWith("Linux")   => "linux"
-    case n if n.startsWith("Mac")     => "mac"
-    case n if n.startsWith("Windows") => "win"
-    case _                            => throw new Exception("Unknown platform!")
-}
-Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
-    .map(m => "org.openjfx" % s"javafx-$m" % "15.0.1" classifier osName)
-}
 libraryDependencies += "org.apache.spark" %% "spark-core" % "2.4.2"
 libraryDependencies += "org.apache.spark" %% "spark-sql" % "2.4.2"
 
