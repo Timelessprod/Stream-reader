@@ -30,17 +30,9 @@ object Consumer {
       .option("kafka.bootstrap.servers", bootstrapServer)
       .option("subscribe", topic)
       .option("startingOffsets", "earliest")
-      //.option("endingOffsets", "latest")
       .load()
-      //.show()
-      //.write.format("csv")
-      //.write.format("com.databricks.spark.csv")
-      //.save("hdfs://localhost:9000/drone-reports_test")
-      //.option("checkpointLocation", "hdfs://localhost:9000/checkpoint")
-      //.option("path", "hdfs://localhost:9000/drone-reports")
       .select(from_json($"value".cast("string"), schema2).as("data"))
       .select("data.*")
-      //.show()
       .select($"reportId", $"peaceWatcherId", $"time", $"longitude", $"latitude",
               explode($"heardWords").as("heardWords"), $"peaceScores")
       .select($"reportId", $"peaceWatcherId", $"time", $"longitude", $"latitude",
