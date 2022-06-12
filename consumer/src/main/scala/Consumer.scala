@@ -30,6 +30,7 @@ object Consumer {
       .option("kafka.bootstrap.servers", bootstrapServer)
       .option("subscribe", topic)
       .option("startingOffsets", "earliest")
+      .option("failOnDataLoss", "false")
       .load()
       .select(from_json($"value".cast("string"), schema2).as("data"))
       .select("data.*")
