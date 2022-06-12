@@ -3,6 +3,7 @@ import org.apache.spark.sql.types.{ArrayType, DoubleType, IntegerType, MapType, 
 import org.apache.spark.sql.{Encoders, SparkSession, types}
 
 object Consumer {
+  // Topic of the kafka stream where drone reports are sent
   val topic = "drone-report"
 
   val topics: Array[String] = Array(this.topic)
