@@ -28,7 +28,7 @@ In this part, we propose an implementation of the architecture adapted to the pr
 
 In case you get a an error saying `Connection refused` or if you are using WSL, please restart your ssh service : `sudo service ssh restart`. If you get a warning while executing the consumer or the producer, just press `y` and enter.
 
-1. Install ***ZooKeeper** and ***Kafka***
+1. Install ***ZooKeeper*** and ***Kafka***
 2. Inatall ***Hadoop***, ***HDFS*** and ***Spark***
 3. Install ***Pyenv*** and ***Poetry***
 
