@@ -5,15 +5,20 @@
 ## First Part : Theory and architecture of the solution
 
 In this part, we answer a set of questions and we ultimately propose an architecture for the project.
-👉 [Subject - 1st part](https://docs.google.com/document/d/1HhRYSRrJ0bu8Qb4HncIYzhKcCU-pHknSEd40RgFnJis/edit)
+
+👉 [Subject - 1st part](https://github.com/Timelessprod/Stream-reader/blob/main/ressources/Part1-Subject.pdf)
+
 👉 [Report - 1st part](report.md)
-👉 [Slides - 1st defense](https://epitafr-my.sharepoint.com/:p:/g/personal/corentin_duchene_epita_fr/Ef8EHwd_AyBEsPu17OsMEhwBQUCb9UU_JXsujEhEOKtmTQ?e=DnoBEk)
+
+👉 [Slides - 1st defense](https://github.com/Timelessprod/Stream-reader/blob/main/ressources/Part1-Slides.pdf)
 
 ## Second part : The POC
 
 In this part, we propose an implementation of the architecture adapted to the project.
-👉 [Subject - 2nd part](https://epitafr-my.sharepoint.com/:b:/g/personal/corentin_duchene_epita_fr/EVKM1gdUW1FDsERujF8ZAKUB_3VB_9Yprsm8oEMu7kxC6w?e=XdFEbo)
-👉 [Slides - 2nd defense](https://epitafr-my.sharepoint.com/:p:/g/personal/corentin_duchene_epita_fr/EUKFKppFublFg4hQwvsx-wsBuAqYnEoO0drIjZz4oM6PGA?e=rOsyU5)
+
+👉 [Subject - 2nd part](https://github.com/Timelessprod/Stream-reader/blob/main/ressources/Part2-Subject.pdf)
+
+👉 [Slides - 2nd defense](https://github.com/Timelessprod/Stream-reader/blob/main/ressources/Part2-Slides.pdf)
 
 ## Collaborators of the project
 
